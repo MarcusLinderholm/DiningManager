@@ -5,6 +5,7 @@ function main() {
   canvas.height=dimension*scale;
   map = clearMap(dimension);
   draw(map);
+  console.log("testXD");
 
   var tables = 0;
   canvas.addEventListener('click', function(e) {
