@@ -1,4 +1,4 @@
-function clearMap(dimension){
+function clearMap(dimension) {
   map = [];
   for(i=0;i<dimension;i++){
     map[i] = [];
