@@ -1,4 +1,4 @@
-function main(){
+function main() {
   var canvas = document.getElementById("canvas");
   dimension = document.getElementById("restaurantSize").value;
   canvas.width=dimension*scale;
