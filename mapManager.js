@@ -1,6 +1,6 @@
 function clearMap(dimension) {
   map = [];
-  for(i=0;i<dimension;i++){
+  for(i=0;i<dimension;i++) {
     map[i] = [];
     for(j=0;j<dimension;j++){
       map [i][j] = {type: "floor"};
