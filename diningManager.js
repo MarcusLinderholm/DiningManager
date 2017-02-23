@@ -6,6 +6,7 @@ function main() {
   map = clearMap(dimension);
   draw(map);
   console.log("testXD");
+  console.log("test2");
 
   var tables = 0;
   canvas.addEventListener('click', function(e) {
