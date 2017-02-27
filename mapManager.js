@@ -3,19 +3,32 @@ function clearMap(dimension) {
   for(i=0;i<dimension;i++) {
     map[i] = [];
     for(j=0;j<dimension;j++){
-      map [i][j] = {type: "floor"};
+      map [i][j] = 0;
     }
   }
+  draw(map);
   return map;
 }
 
-function addTable(xCord, yCord, size, map, id){
+function overlaps(xCord, yCord, size){
   for(i=0;i<size;i++){
     for(j=0;j<size;j++){
-      if(yCord+i<dimension&&xCord+j<dimension){
-          map[yCord+i][xCord+j] = {type: "table"};
+      if(!currentMap[yCord+i][xCord+j]==0){
+        return true;
       }
     }
   }
-  return map;
+  return false;
+}
+
+function addTable(xCord, yCord, size, id){
+  for(i=0;i<size;i++){
+    for(j=0;j<size;j++){
+      if(yCord+i<dimension&&xCord+j<dimension){
+        currentMap[yCord+i][xCord+j] = id;
+      }
+    }
+  }
+  tables++;
+  draw(currentMap);
 }
