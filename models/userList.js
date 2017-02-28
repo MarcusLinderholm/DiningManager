@@ -26,7 +26,7 @@ UserList.prototype = (function() {
 
         userLookup: function(email, password, callback) {
             var sql = 'select password from members where email=' + email + ";";
-            db.execute(sql, callback));
+            db.execute(sql, callback);
 
         },
 
@@ -38,7 +38,11 @@ UserList.prototype = (function() {
 
             "values('" + email + "', '" + password + "');"
 
-            db.execute(sql);
+            //console.log(db.execute(sql, callback));
+
+            db.execute(sql, callback);
+
+
 
             //(console.log("added user"));
         },

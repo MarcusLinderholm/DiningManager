@@ -21,13 +21,39 @@ module.exports = {
     execute: function(sql, resultcallback) {
         //console.log("hej");
         pool.getConnection(function(err, con) {
+            //if(err) throw err;
+            con.query(sql, function(error, results, fields){
+                    if(error){
+
+                        console.log(error);
+
+                    }
+                    else {
+                        //console.log("fields:" + fields)
+                        //console.log(results);
+                        console.log("query done");
+
+                    }
+
+            });
+
+
+
+            con.release();
+
+
+
+            /*
             if (err) {
                 console.log("Query failed: " + sql + err)
-            } else {
+            }
+            else {
                 con.query(sql, resultcallback);
                 console.log("connection established");
             }
             con.release();
+
+            */
         });
 
     },

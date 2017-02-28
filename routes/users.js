@@ -17,9 +17,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-    //console.log("add mail");
-    userList.addUser(req.body.email, req.body.password);
-    res.redirect("/users");
+    //console.log(userList.addUser(req.body.email, req.body.password));
+    //res.redirect("/users");
+
+
+    if(userList.addUser(req.body.email, req.body.password)){
+            res.render('login', {
+                status: 'Registration successful'
+            });
+    }
+    else {
+        res.render('login', {
+            status: 'User exists'
+        });
+    }
+
+
 });
 
 router.post('/login', function(req, res, next) {
