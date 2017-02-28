@@ -4,14 +4,22 @@ var userList = require('../models/userList.js')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-
-  userList.getUsers(function(err, rows, fields) {
+  //res.send('respond with a resource');
+  res.render('login');
+  /*
+  regUser.getUsers(function(err, rows, fields) {
       //console.log(JSON.stringify(rows));
       console.log("hej");
       console.log(rows);
       res.render('index');
   })
+  */
+});
+
+router.post('/add', function(req, res, next) {
+    console.log("add mail");
+    userList.addUser(req.body.email, req.body.password);
+    res.redirect("/users");
 });
 
 module.exports = router;

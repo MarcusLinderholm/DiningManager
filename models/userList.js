@@ -23,13 +23,24 @@ UserList.prototype = (function() {
             var sql = 'select * from members where id=' + id + ";";
             db.execute(sql, callback);
         },
-        add: function(name, email, password, callback) {
-            // Uhhuu ugly string!!!
-            var sql = "insert into members (name)" +
-            "values('" + name + "', '" + email + "', '" + password + "');"
-            db.execvoid(sql);
+
+        getByEmail: function(email, callback) {
+            var sql = 'select * from members where email=' + email + ";";
+            db.execute(sql, callback);
         },
-        delete: function(id, callback) {
+
+
+        addUser: function(email, password, callback) {
+
+
+            var sql = "insert into members (email, password)" +
+            "values('" + email + "', '" + password + "');"
+
+
+            db.execvoid(sql);
+            (console.log("added user"));
+        },
+        deleteUser: function(id, callback) {
             var sql = "delete from members where id=" + id + ";";
             db.execvoid(sql);
         }

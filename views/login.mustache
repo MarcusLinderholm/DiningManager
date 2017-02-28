@@ -25,20 +25,20 @@
           <div id="login">
             <h1>Welcome Back!</h1>
 
-            <form action="/users/add" method="post">
+            <form action="/users/login" method="post">
 
               <div class="field-wrap">
               <label>
                 Email Address<span class="req">*</span>
               </label>
-              <input type="email"required autocomplete="off"/>
+              <input type="email" name="email"required autocomplete="off"/>
             </div>
 
             <div class="field-wrap">
               <label>
                 Password<span class="req">*</span>
               </label>
-              <input type="password"required autocomplete="off"/>
+              <input type="password" name="password"required autocomplete="off"/>
             </div>
 
             <p class="forgot"><a href="#">Forgot Password?</a></p>
@@ -53,7 +53,7 @@
         <div id="signup">
           <h1>Sign Up</h1>
 
-          <form action="/" method="post">
+          <form action="/users/add" method="post">
 
             <div class="field-wrap">
               <label>
@@ -73,7 +73,7 @@
             <label>
               Set A Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password" name="password"required autocomplete="off"/>
           </div>
 
           <button type="submit" class="button button-block"/>Get Started</button>
