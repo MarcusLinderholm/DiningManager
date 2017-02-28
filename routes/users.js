@@ -16,10 +16,17 @@ router.get('/', function(req, res, next) {
   */
 });
 
-router.post('/add', function(req, res, next) {
-    console.log("add mail");
+router.post('/signup', function(req, res, next) {
+    //console.log("add mail");
     userList.addUser(req.body.email, req.body.password);
     res.redirect("/users");
 });
+
+router.post('/login', function(req, res, next) {
+    //console.log("add mail");
+    userList.userLookup(req.body.email, req.body.password);
+    res.redirect("/users");
+});
+
 
 module.exports = router;

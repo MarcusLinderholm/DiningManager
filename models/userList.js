@@ -24,9 +24,10 @@ UserList.prototype = (function() {
             db.execute(sql, callback);
         },
 
-        getByEmail: function(email, callback) {
-            var sql = 'select * from members where email=' + email + ";";
-            db.execute(sql, callback);
+        userLookup: function(email, password, callback) {
+            var sql = 'select password from members where email=' + email + ";";
+            db.execute(sql, callback));
+
         },
 
 
@@ -34,11 +35,12 @@ UserList.prototype = (function() {
 
 
             var sql = "insert into members (email, password)" +
+
             "values('" + email + "', '" + password + "');"
 
+            db.execute(sql);
 
-            db.execvoid(sql);
-            (console.log("added user"));
+            //(console.log("added user"));
         },
         deleteUser: function(id, callback) {
             var sql = "delete from members where id=" + id + ";";

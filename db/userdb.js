@@ -19,7 +19,7 @@ var pool = mysql.createPool({
 module.exports = {
     // Will return result
     execute: function(sql, resultcallback) {
-        console.log("hej");
+        //console.log("hej");
         pool.getConnection(function(err, con) {
             if (err) {
                 console.log("Query failed: " + sql + err)
