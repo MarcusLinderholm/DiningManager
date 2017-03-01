@@ -1,21 +1,51 @@
-function clearMap(dimension) {
-  map = [];
-  for(i=0;i<dimension;i++) {
-    map[i] = [];
+function clearMap(dimension){
+  currentMap = [];
+  for(i=0;i<dimension;i++){
+    currentMap[i] = [];
     for(j=0;j<dimension;j++){
-      map [i][j] = {type: "floor"};
+      currentMap[i][j] = 0;
     }
   }
-  return map;
+  draw(currentMap);
 }
 
-function addTable(xCord, yCord, size, map, id){
+function overlaps(xCord, yCord, size){
   for(i=0;i<size;i++){
     for(j=0;j<size;j++){
-      if(yCord+i<dimension&&xCord+j<dimension){
-          map[yCord+i][xCord+j] = {type: "table"};
+      if(!currentMap[yCord+i][xCord+j]==0){
+        return true;
       }
     }
   }
+  return false;
+}
+
+function addTable(xCord, yCord, size, id){
+  for(i=0;i<size;i++){
+    for(j=0;j<size;j++){
+      if(yCord+i<dimension&&xCord+j<dimension){
+        currentMap[yCord+i][xCord+j] = id;
+      }
+    }
+  }
+  draw(currentMap);
+}
+
+function mapToString(map){
+  var jsonString = "";
+  map.forEach(function(row){
+    jsonString += JSON.stringify(row) + "|";
+  });
+  return jsonString;
+}
+
+function stringToMap(mapString){
+  var array = mapString.split("|");
+  var map = [];
+  var i = 0;
+  array.forEach(function(row){
+    map[i] = (row.substring(1,row.length-1)).split(",");
+    i++;
+  });
   return map;
 }

@@ -5,8 +5,8 @@ function draw(board) {
     var imgData = ctx.createImageData(scale,scale);
       for(i=0;i<dimension;i++){
         for(j=0;j<dimension;j++){
-          switch(board[i][j].type){
-            case "floor":
+          switch(parseInt(board[i][j])){
+            case 0:
               for (n=0;n<imgData.data.length;n+=4){
                 imgData.data[n+0]=0;
                 imgData.data[n+1]=255;
@@ -14,7 +14,7 @@ function draw(board) {
                 imgData.data[n+3]=255;
               }
               break;
-            case "table":
+            default:
               for (n=0;n<imgData.data.length;n+=4){
                 imgData.data[n+0]=255;
                 imgData.data[n+1]=0;
