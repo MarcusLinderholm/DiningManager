@@ -21,16 +21,27 @@ module.exports = {
     execute: function(sql, resultcallback) {
         //console.log("hej");
         pool.getConnection(function(err, con) {
-            //if(err) throw err;
-            con.query(sql, function(error, results, fields){
-                    if(error){
+            if (err) {
+                console.log("Query failed: " + sql + err)
+            } else {
+                con.query(sql, resultcallback);
+            }
+            con.release();
+        });
+
+
+
+            /*
+            con.query(sql, resultcallback){
+                    if(resultcallback){
 
                         console.log(error);
+
 
                     }
                     else {
                         //console.log("fields:" + fields)
-                        //console.log(results);
+                        resultcallback(null, true);
                         console.log("query done");
 
                     }
@@ -38,9 +49,8 @@ module.exports = {
             });
 
 
-
             con.release();
-
+*/
 
 
             /*
@@ -54,7 +64,7 @@ module.exports = {
             con.release();
 
             */
-        });
+        
 
     },
     // No result

@@ -24,19 +24,21 @@ UserList.prototype = (function() {
             db.execute(sql, callback);
         },
 
-        userLookup: function(email, password, callback) {
-            var sql = 'select password from members where email=' + email + ";";
+        userLookup: function(email, callback) {
+            //var sql = 'select * from members;';
+            var sql = "select password from members where email=" + email + ";";
+            //var sql = 'select password from members where email=' + email + ";"
             db.execute(sql, callback);
 
         },
 
 
-        addUser: function(email, password, callback) {
+        addUser: function(email, password, map, callback) {
 
 
-            var sql = "insert into members (email, password)" +
+            var sql = "insert into members (email, password, map)" +
 
-            "values('" + email + "', '" + password + "');"
+            "values('" + email + "', '" + password + "', '" + map + "');"
 
             //console.log(db.execute(sql, callback));
 

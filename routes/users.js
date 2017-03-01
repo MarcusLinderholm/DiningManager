@@ -21,23 +21,30 @@ router.post('/signup', function(req, res, next) {
     //res.redirect("/users");
 
 
-    if(userList.addUser(req.body.email, req.body.password)){
-            res.render('login', {
-                status: 'Registration successful'
-            });
-    }
-    else {
-        res.render('login', {
-            status: 'User exists'
-        });
-    }
+    userList.addUser(req.body.email, req.body.password, "hej", function(err, row, fields){
+        if(err){
+            res.render('login', {status: "user exists"});
+            console.log(err);
+        }
+        else {
+            res.render('login', {status: "registration successful"});
+            console.log(JSON.stringify(row));
+
+        }
+    });
+
 
 
 });
 
 router.post('/login', function(req, res, next) {
     //console.log("add mail");
-    userList.userLookup(req.body.email, req.body.password);
+    userList.userLookup(req.body.email, function(err, row, fields){
+        if(err)
+            console.log(err)
+        console.log(row);
+        console.log(fields);
+    });
     res.redirect("/users");
 });
 
