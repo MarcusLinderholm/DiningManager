@@ -1,13 +1,12 @@
-function clearMap(dimension) {
-  map = [];
-  for(i=0;i<dimension;i++) {
-    map[i] = [];
+function clearMap(dimension){
+  currentMap = [];
+  for(i=0;i<dimension;i++){
+    currentMap[i] = [];
     for(j=0;j<dimension;j++){
-      map [i][j] = 0;
+      currentMap[i][j] = 0;
     }
   }
-  draw(map);
-  return map;
+  draw(currentMap);
 }
 
 function overlaps(xCord, yCord, size){
@@ -29,6 +28,24 @@ function addTable(xCord, yCord, size, id){
       }
     }
   }
-  tables++;
   draw(currentMap);
+}
+
+function mapToString(map){
+  var jsonString = "";
+  map.forEach(function(row){
+    jsonString += JSON.stringify(row) + "|";
+  });
+  return jsonString;
+}
+
+function stringToMap(mapString){
+  var array = mapString.split("|");
+  var map = [];
+  var i = 0;
+  array.forEach(function(row){
+    map[i] = (row.substring(1,row.length-1)).split(",");
+    i++;
+  });
+  return map;
 }

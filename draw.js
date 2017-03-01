@@ -5,7 +5,7 @@ function draw(board) {
     var imgData = ctx.createImageData(scale,scale);
       for(i=0;i<dimension;i++){
         for(j=0;j<dimension;j++){
-          switch(board[i][j]){
+          switch(parseInt(board[i][j])){
             case 0:
               for (n=0;n<imgData.data.length;n+=4){
                 imgData.data[n+0]=0;

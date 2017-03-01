@@ -1,57 +1,26 @@
 <head>
 	<script src="draw.js"></script>
 	<script src="mapManager.js"></script>
-	<script src="diningManager.js"></script>
+	<script src="mapCreator.js"></script>
 
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<!--Load Script and Stylesheet -->
-		<script type="text/javascript" src="jQuerryModules/jquery.simple-dtpicker.js"></script>
-		<link type="text/css" href="jQuerryModules/jquery.simple-dtpicker.css" rel="stylesheet" />
 </head>
 <body>
-<canvas id="canvas" width=50 height=50></canvas>
 <h1> Table size: </h1>
-<input type='range' min='0' max='15' value='0' id='tableSize'></input>
+<input type='range' min='5' max='15' value='10' id='tableSize'></input>
 <h1> Restaurant size: </h1>
-<input type='range' min='0' max='150' value='0' id='restaurantSize'></input>
+<input type='range' min='75' max='150' value='75' id='restaurantSize' ></input>
 <h1> Add table? </h1>
 <input type='checkbox' id='tableCheckBox'></input>
-<input type="text" id="date_manual" value="">
-<input type="button" id="btn_manual_generate" value="Generate">
-<input type="button" id="btn_manual_show" value="Show">
-<input type="button" id="btn_manual_get_date" value="getDate">
-<input type="button" id="btn_manual_hide" value="Hide">
-<input type="button" id="btn_manual_destroy" value="Destroy">
-
-<script type="text/javascript">
-	$(function(){
-		$('#btn_manual_generate').click(function(){
-			$('#date_manual').appendDtpicker({
-				"inline": true
-			});
-		});
-		$('#btn_manual_show').click(function(){
-			$('#date_manual').handleDtpicker('show');
-		});
-		$('#btn_manual_hide').click(function(){
-			$('#date_manual').handleDtpicker('hide');
-		});
-		$('#btn_manual_get_date').click(function(){
-			var date = $('#date_manual').handleDtpicker('getDate');
-			window.alert(date.toString());
-		});
-		$('#btn_manual_set_date').click(function(){
-			$('#date_manual').handleDtpicker('setDate', new Date(2014, 04, 25, 0, 0, 0));
-		});
-		$('#btn_manual_destroy').click(function(){
-			$('#date_manual').handleDtpicker('destroy');
-		});
-	});
-</script>
+<br>
+<canvas id="canvas" width=50 height=50></canvas>
 <script>
 scale = 1;
-main();
+tableCreator();
 </script>
+<br>
+<input type='button' id='createRestaurant' value='Create Restaurant' onclick='restaurantCreator()'>
 
 </body>
