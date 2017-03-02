@@ -38,7 +38,7 @@ UserList.prototype = (function() {
 
             var sql = "insert into members (email, password, map)" +
 
-            "values('" + email + "', '" + password + "', '" + map + "');"
+                "values('" + email + "', '" + password + "', '" + map + "');"
 
             //console.log(db.execute(sql, callback));
 

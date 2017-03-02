@@ -21,14 +21,17 @@ router.post('/signup', function(req, res, next) {
     //res.redirect("/users");
 
 
-    userList.addUser(req.body.email, req.body.password, req.body.createRestaurant, function(err, row, fields){
+    userList.addUser(req.body.email, req.body.password, req.body.map, function(err, row, fields){
         if(err){
-            res.render('login', {status: "user exists"});
+
             console.log(err);
+            console.log(req.body.map);
+            res.render('login', {status: "A user with this email is already registered"});
         }
         else {
-            res.render('login', {status: "registration successful"});
-            console.log(req.body.createRestaurant);
+            res.render('login', {status: "Registration successful"});
+            console.log(req.body.map);
+            //console.log(req.body.createRestaurant.value);
 
         }
     });
@@ -40,18 +43,21 @@ router.post('/signup', function(req, res, next) {
 router.post('/login', function(req, res, next) {
     //console.log("add mail");
     userList.userLookup(req.body.email, function(err, row, fields){
-        if(err)
-            console.log(err);
-        else {
-
-            if(row[0].password == req.body.password){
-                res.render('index', {title: "Logged in as: " + req.body.email});
+        if(!err){
+            if(row.length == 0){
+                res.render('login', {status: "Email doesn't exist"});
             }
-            else {
-                res.render('login', {status: "Wrong password"});
+            else{
+                if(row[0].password == req.body.password){
+                    res.render('index', {title: "Logged in as: " + req.body.email});
+                }
+                else {
+                    res.render('login', {status: "Wrong password"});
+                }
             }
-
         }
+        else throw err;
+
     });
 
 });
