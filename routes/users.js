@@ -49,7 +49,7 @@ router.post('/login', function(req, res, next) {
             }
             else{
                 if(row[0].password == req.body.password){
-                    res.render('index', {title: "Logged in as: " + req.body.email});
+                    res.render('index', {map: row[0].map});
                 }
                 else {
                     res.render('login', {status: "Wrong password"});

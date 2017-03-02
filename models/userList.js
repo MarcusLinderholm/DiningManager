@@ -27,7 +27,7 @@ UserList.prototype = (function() {
         userLookup: function(email, callback) {
             //var sql = 'select * from members;';
             //var sql = "select password from members where email=" + email + ";";
-            var sql = "select password from members where email='" + email + "';";
+            var sql = "select * from members where email='" + email + "';";
             db.execute(sql, callback);
 
         },
