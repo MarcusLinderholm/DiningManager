@@ -21,14 +21,14 @@ router.post('/signup', function(req, res, next) {
     //res.redirect("/users");
 
 
-    userList.addUser(req.body.email, req.body.password, "hej", function(err, row, fields){
+    userList.addUser(req.body.email, req.body.password, req.body.createRestaurant, function(err, row, fields){
         if(err){
             res.render('login', {status: "user exists"});
             console.log(err);
         }
         else {
             res.render('login', {status: "registration successful"});
-            console.log(JSON.stringify(row));
+            console.log(req.body.createRestaurant);
 
         }
     });
@@ -53,7 +53,7 @@ router.post('/login', function(req, res, next) {
 
         }
     });
-    
+
 });
 
 

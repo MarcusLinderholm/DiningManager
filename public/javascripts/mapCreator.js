@@ -31,6 +31,7 @@ function restaurantCreator(){
     */
     console.log(mapToString(currentMap));
     tableArray.forEach(function(table){
-      console.log(table);
+      //console.log(table);
     });
+    return mapToString(currentMap);
 }
