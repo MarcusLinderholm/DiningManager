@@ -41,11 +41,19 @@ router.post('/login', function(req, res, next) {
     //console.log("add mail");
     userList.userLookup(req.body.email, function(err, row, fields){
         if(err)
-            console.log(err)
-        console.log(row);
-        console.log(fields);
+            console.log(err);
+        else {
+
+            if(row[0].password == req.body.password){
+                res.render('index', {title: "Logged in as: " + req.body.email});
+            }
+            else {
+                res.render('login', {status: "Wrong password"});
+            }
+
+        }
     });
-    res.redirect("/users");
+    
 });
 
 
