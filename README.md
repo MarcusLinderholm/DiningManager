@@ -1,1 +1,1 @@
-# DingingManager
+# DiningManager

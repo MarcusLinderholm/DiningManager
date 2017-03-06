@@ -14,13 +14,13 @@ function tableCreator() {
             x: Math.floor((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width),
             y: Math.floor((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height)
         };
-        if (document.getElementById("tableCheckBox").checked) {
-            if (!overlaps(pos.x, pos.y, tableSize)) {
-                tables++;
-                addTable(pos.x, pos.y, tableSize, tables);
-                tableArray.push(tables);
-            }
+        //if (document.getElementById("tableCheckBox").checked) {
+        if (!overlaps(pos.x, pos.y, tableSize)) {
+            tables++;
+            addTable(pos.x, pos.y, tableSize, tables);
+            tableArray.push(tables);
         }
+        //}
     }, false);
 }
 

@@ -2,6 +2,8 @@ function draw(board) {
   var canvas = document.getElementById("canvas");
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
+    var scale = 1;
+    var dimension = 75;
     var imgData = ctx.createImageData(scale,scale);
       for(i=0;i<dimension;i++){
         for(j=0;j<dimension;j++){

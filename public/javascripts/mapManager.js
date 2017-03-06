@@ -40,7 +40,7 @@ function mapToString(map){
 }
 
 function stringToMap(mapString){
-  var array = mapString.split("|");
+  var array = mapString.toString().split("|");
   var map = [];
   var i = 0;
   array.forEach(function(row){
