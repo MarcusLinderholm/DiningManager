@@ -39,7 +39,7 @@ function mapToString(map){
   return jsonString;
 }
 
-stringToMap: function(mapString){
+function stringToMap(mapString){
     var array = mapString.toString().split("|");
     var map = [];
     var i = 0;
@@ -62,3 +62,4 @@ function stringToMap(mapString){
   });
   return map;
 }
+*/
