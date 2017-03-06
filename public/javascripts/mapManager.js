@@ -6,6 +6,7 @@ function clearMap(dimension){
       currentMap[i][j] = 0;
     }
   }
+  console.log("hej");
   draw(currentMap);
 }
 
