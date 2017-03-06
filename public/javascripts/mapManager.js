@@ -40,14 +40,13 @@ function mapToString(map){
 }
 
 
-
 function stringToMap(mapString){
-  var array = mapString.toString().split("|");
-  var map = [];
-  var i = 0;
-  array.forEach(function(row){
-    map[i] = (row.substring(1,row.length-1)).split(",");
-    i++;
-  });
-  return map;
+    var array = mapString.toString().split("|");
+    var map = [];
+    var i = 0;
+    array.forEach(function(row){
+      map[i] = (row.substring(1,row.length-1)).split(",");
+      i++;
+    });
+    return map;
 }
