@@ -56,7 +56,7 @@ router.post('/login', function(req, res, next) {
             } else {
                 if (row[0].password == req.body.password) {
                     res.render('index', {
-                        map: mapManager.stringToMap(row[0].map)
+                        map: stringToMap(row[0].map)
                     });
                 } else {
                     res.render('login', {

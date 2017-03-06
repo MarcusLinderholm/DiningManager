@@ -1,3 +1,16 @@
+create database diningmanager;
+
+create user 'sebastian'@'localhost' identified by hejsan;
+
+grant all privileges on diningmanager.* to 'sebastian'@'localhost';
+
+quit
+
+mysql -u sebastian -p
+hejsan
+
+
+
 CREATE TABLE `members` (
   `email` varchar(50) NOT NULL,
   `password` char(128) NOT NULL,
