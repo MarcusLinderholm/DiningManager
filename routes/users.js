@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var userList = require('../models/userList.js')
+<<<<<<< 56f32c5c41bea85082bd833e48ad7cc1bcb804ca
 var draw = require('../public/javascripts/draw.js')
+=======
+>>>>>>> Removed dependency on dimensions
 var mapManager = require('../public/javascripts/mapManager.js')
 
 /* GET users listing. */
@@ -56,7 +59,11 @@ router.post('/login', function(req, res, next) {
             } else {
                 if (row[0].password == req.body.password) {
                     res.render('index', {
+<<<<<<< 56f32c5c41bea85082bd833e48ad7cc1bcb804ca
                         map: mapManager.stringToMap(row[0].map)
+=======
+                        map: row[0].map
+>>>>>>> Removed dependency on dimensions
                     });
                 } else {
                     res.render('login', {
