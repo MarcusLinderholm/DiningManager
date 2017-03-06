@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userList = require('../models/userList.js')
+var draw = require('../public/javascripts/draw.js')
 var mapManager = require('../public/javascripts/mapManager.js')
 
 /* GET users listing. */
@@ -55,7 +56,7 @@ router.post('/login', function(req, res, next) {
             } else {
                 if (row[0].password == req.body.password) {
                     res.render('index', {
-                        map: row[0].map
+                        map: mapManager.stringToMap(row[0].map)
                     });
                 } else {
                     res.render('login', {
