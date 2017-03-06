@@ -59,7 +59,7 @@ router.post('/login', function(req, res, next) {
                 if (row[0].password == req.body.password) {
                     res.render('index', {
 
-                        map: stringToMap(row[0].map)
+                        map: row[0].map
 
                     });
                 } else {

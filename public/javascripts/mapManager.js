@@ -49,5 +49,5 @@ function stringToMap(mapString){
       map[i] = (row.substring(1,row.length-1)).split(",");
       i++;
     });
-    return map;
+    draw(map);
 }
