@@ -50,4 +50,5 @@ function stringToMap(mapString){
       i++;
     });
     draw(map);
+    return map;
 }
