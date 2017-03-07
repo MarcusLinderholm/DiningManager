@@ -24,8 +24,7 @@ router.post('/signup', function(req, res, next) {
     //console.log(userList.addUser(req.body.email, req.body.password));
     //res.redirect("/users");
 
-
-    userList.addUser(req.body.email, req.body.password, req.body.map, req.body.tables, function(err, row, fields) {
+    userList.addUser(req.body.email, req.body.password, req.body.map, function(err, row, fields) {
         if (err) {
 
             console.log(err);
@@ -41,6 +40,14 @@ router.post('/signup', function(req, res, next) {
             //console.log(req.body.map);
             //console.log(req.body.createRestaurant.value);
 
+        }
+    });
+
+    userList.addTable(req.body.email, req.body.tables, function(err, row, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("tables successfully added");
         }
     });
 

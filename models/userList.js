@@ -33,7 +33,7 @@ UserList.prototype = (function() {
         },
 
 
-        addUser: function(email, password, map, tables, callback) {
+        addUser: function(email, password, map, callback) {
 
 
             var sql = "insert into members (email, password, map)" +
@@ -43,18 +43,17 @@ UserList.prototype = (function() {
             //console.log(db.execute(sql, callback));
 
             db.execute(sql, callback);
-            console.log(tables);
+        },
+
+        addTable: function(email, tables, callback) {
             for (var i = 1; i < tables+1; i++) {
                     var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
                     db.execute(sql, callback);
 
             }
-
-
-
-            //(console.log("added user"));
         },
+
         deleteUser: function(id, callback) {
             var sql = "delete from members where id=" + id + ";";
             db.execvoid(sql);
