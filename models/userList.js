@@ -46,7 +46,8 @@ UserList.prototype = (function() {
         },
 
         addTable: function(email, tables, callback) {
-            for (var i = 1; i < tables+1; i++) {
+            
+            for (var i = 1; i < parseInt(tables) + 1; i++) {
                     var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
                     db.execute(sql, callback);

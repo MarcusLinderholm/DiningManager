@@ -34,10 +34,21 @@ router.post('/signup', function(req, res, next) {
                 status: "Email already registered"
             });
         } else {
+
+            userList.addTable(req.body.email, req.body.tables, function(err, row, fields) {
+                if(err)
+                    console.log(err);
+                else{
+                    console.log(req.body.tables + "added");
+
+                }
+            });
+
             //console.log(req.body.tables);
             res.render('login', {
                 status: "Registration successful, email: " + req.body.email
             });
+
 
             //console.log(req.body.map);
             //console.log(req.body.createRestaurant.value);
@@ -45,14 +56,7 @@ router.post('/signup', function(req, res, next) {
         }
     });
 
-    userList.addTable(req.body.email, req.body.tables, function(err, row, fields) {
-        if(err)
-            console.log(err);
-        else{
-            console.log(req.body.tables + "added");
 
-        }
-    })
 
 
 
