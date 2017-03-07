@@ -2,7 +2,7 @@ function draw(board) {
   var canvas = document.getElementById("canvas");
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
-    var scale = 1;
+    var scale = 5;
     var imgData = ctx.createImageData(scale,scale);
       for(i=0;i<board.length;i++){
         for(j=0;j<board.length;j++){
