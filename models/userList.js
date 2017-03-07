@@ -33,7 +33,7 @@ UserList.prototype = (function() {
         },
 
 
-        addUser: function(email, password, map, callback) {
+        addUser: function(email, password, map, tables, callback) {
 
 
             var sql = "insert into members (email, password, map)" +

@@ -25,19 +25,20 @@ router.post('/signup', function(req, res, next) {
     //res.redirect("/users");
 
 
-    userList.addUser(req.body.email, req.body.password, req.body.map, function(err, row, fields) {
+    userList.addUser(req.body.email, req.body.password, req.body.map, req.body.tables, function(err, row, fields) {
         if (err) {
 
             console.log(err);
-            console.log(req.body.map);
+            //console.log(req.body.map);
             res.render('login', {
                 status: "Email already registered"
             });
         } else {
+            console.log(req.body.tables);
             res.render('login', {
                 status: "Registration successful, email: " + req.body.email
             });
-            console.log(req.body.map);
+            //console.log(req.body.map);
             //console.log(req.body.createRestaurant.value);
 
         }

@@ -35,5 +35,5 @@ function restaurantCreator() {
     });
     //mapToString(currentMap);
     document.getElementById('map').value = mapToString(currentMap);
-    //return mapToString(currentMap);
+    document.getElementById('tables').value = tableArray.length;
 }
