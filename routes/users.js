@@ -35,14 +35,7 @@ router.post('/signup', function(req, res, next) {
             });
         } else {
 
-            userList.addTable(req.body.email, req.body.tables, function(err, row, fields) {
-                if(err)
-                    console.log(err);
-                else{
-                    console.log(req.body.tables + "added");
-
-                }
-            });
+            userList.addTable(req.body.email, req.body.tables);
 
             //console.log(req.body.tables);
             res.render('login', {
