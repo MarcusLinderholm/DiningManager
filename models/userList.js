@@ -43,6 +43,13 @@ UserList.prototype = (function() {
             //console.log(db.execute(sql, callback));
 
             db.execute(sql, callback);
+            console.log(tables);
+            for (var i = 1; i < tables+1; i++) {
+                    var sql = "insert into tables (email, tableID)" +
+                    "values('" + email + "', '" + i + "');"
+                    db.execute(sql, callback);
+
+            }
 
 
 
