@@ -67,8 +67,10 @@ router.post('/login', function(req, res, next) {
                 });
             } else {
                 if (row[0].password == req.body.password) {
+                    req.session.user = req.body.email;
+                    console.log(req.body.email);
                     res.render('index', {
-
+                        user: req.session.user,
                         map: row[0].map
 
                     });
@@ -84,5 +86,19 @@ router.post('/login', function(req, res, next) {
 
 });
 
+
+router.post('/booking', function(req, res, next) {
+    userList.bookTable(req.session.user, req.body.tableID, req.body.hour, function(err, row, fields){
+        console.log(req.body.tableID);
+        if(!err){
+            console.log("booking of table " + req.body.tableID + " successful");
+
+        }
+        else {
+            console.log(req.body.tableID);
+            console.log(err);
+        }
+    })
+});
 
 module.exports = router;

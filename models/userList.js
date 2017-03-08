@@ -46,7 +46,7 @@ UserList.prototype = (function() {
         },
 
         addTable: function(email, tables, callback) {
-            
+
             for (var i = 1; i < parseInt(tables) + 1; i++) {
                     var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
@@ -55,10 +55,14 @@ UserList.prototype = (function() {
             }
         },
 
-        deleteUser: function(id, callback) {
-            var sql = "delete from members where id=" + id + ";";
-            db.execvoid(sql);
+        bookTable: function(email, table, time, callback){
+            var sql = "insert into bookings (email, tableID, time)" +
+            "values('" + email + "', '" + table + "', '" + time + "');"
+            db.execute(sql, callback);
+
         }
+
+
     }
 })();
 

@@ -15,6 +15,7 @@ function getTable(map) {
         //if (document.getElementById("tableCheckBox").checked) {
         //console.log(map);
         console.log(map[pos.y][pos.x]);
+        document.getElementById("tableID").value = map[pos.y][pos.x]; 
         //}
     }, false);
 }

@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 
-	<link rel="stylesheet" href="../stylesheets/style.css">
+	<link rel="stylesheet" href="../stylesheets/style.css"> Logged in as: {{ user }}
 
 </head>
 
@@ -28,13 +28,15 @@
 
 <form action="/users/booking" method="post">
 	TableID:<br>
-	<input type="text" name="tableID" value=""><br> Timme:
+	<input type="text" id="tableID" name="tableID" value="" style="color:#888;"
+    onfocus="inputFocus(this)" onblur="inputBlur(this)" /><br> Timme:
 	<br>
 	<input type="text" name="hour" value=""><br> Minut:
 	<br>
 	<input type="text" name="minute" value=""><br> Duration:
 	<br>
-	<input type="text" name="duration" value=""><br>
+	<input type="text" name="duration" value="2 hours" style="color:#888;"
+    onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled"><br>
 	<input type="submit" value="Submit">
 </form>
 

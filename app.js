@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mustacheExpress = require('mustache-express');
-
+var session = require('express-session');
 
 
 var index = require('./routes/index');
@@ -18,6 +18,14 @@ var app = express();
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'shhhhhhhhhh', name: 'todolistcookie',
+    //store: sessionStore,
+    //proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
 // view engine setup
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
