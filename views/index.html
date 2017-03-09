@@ -44,28 +44,23 @@
 
 
 
-
 {{#booking}}
-<li>
-	<td class="getTableID">
-		{{#tableID}}{{.}}{{/tableID}}
-	</td>
-	<td class="getTime">
-		{{#time}}{{.}}{{/time}}
-	</td>
+<div class="getTableID">
+{{#tableID}}
+	{{.}}
 
-</li>
+{{/tableID}}
+
+
+{{#time}}
+	{{.}}
+{{/time}}
+
+</div>
+
 {{/booking}}
 
-<script>
-var tables = document.getElementsByClassName("getTableID");
-var arr = [].slice.call(tables);
-arr.forEach(function(val){
-	console.log(val.value);
-});
-console.log(tables);
 
-</script>
 
 
 
@@ -74,9 +69,9 @@ console.log(tables);
 	map = stringToMap(s);
 	getTable(map);
 	stringToMap(s);
+	var bookings = getBookings();
+	getBookedTables(bookings);
 </script>
-
-
 <!--
 <table>
 	{{#bookings}}

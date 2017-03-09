@@ -19,3 +19,23 @@ function getTable(map) {
         //}
     }, false);
 }
+function getBookings(){
+    var bookings = [];
+    var tables = document.getElementsByClassName("getTableID");
+    var arr = [].slice.call(tables);
+    arr.forEach(function(val) {
+        bookings.push({tableID:(val.innerHTML).substring(2,3), time:(val.innerHTML).substring(8,16)});
+    });
+    return bookings;
+}
+function getBookedTables(bookings){
+    var currentTime = new Date();
+    var bookedTables = []
+    bookings.forEach(function(booking){
+        if(parseInt(booking.time.substring(0,2))<=currentTime.getHours() && parseInt(booking.time.substring(0,2))+2>=currentTime.getHours()){
+            bookedTables.push(parseInt(booking.tableID));
+        }
+    });
+    updateDraw(map,bookedTables);
+    return bookedTables;
+}
