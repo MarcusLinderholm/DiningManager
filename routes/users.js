@@ -89,7 +89,7 @@ router.post('/login', function(req, res, next) {
 
 
 router.post('/booking', function(req, res, next) {
-    userList.bookTable(req.session.user, req.body.tableID, req.body.hour, function(err, row, fields){
+    userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
         console.log(req.body.tableID);
         if(!err){
             console.log("booking of table " + req.body.tableID + " successful");
@@ -110,13 +110,21 @@ router.post('/booking', function(req, res, next) {
 router.post('/getBookings', function(req, res, next) {
     userList.getBookings(req.session.user, function(err, row, fields) {
         if (!err) {
-            console.log(row);
+            for (var i = 0; i < row.length; i++) {
+                console.log(row[i].email);
+            }
+            //console.log(row);
+            var arr = [];
+            for (var i = 0; i < row.length; i++) {
+                arr[i] = {tableID: row[i].tableID, time: row[i].time};
+            }
+            console.log(arr);
             res.render('index', {
                 map: req.session.map,
                 user: req.session.user,
-                for (var i = 0; i < row.length; i++) {
-                    bookings: row[i];
-                }
+                booking: arr
+
+
                 //bookings: row
             })
         }
