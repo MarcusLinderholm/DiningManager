@@ -60,6 +60,12 @@ UserList.prototype = (function() {
             "values('" + email + "', '" + table + "', '" + time + ":00" + "');"
             db.execute(sql, callback);
 
+        },
+
+        getBookings: function(currEmail, callback) {
+            var sql = "select * from bookings where email= '" + currEmail + "'";
+            console.log(sql);
+            db.execute(sql, callback);
         }
 
 

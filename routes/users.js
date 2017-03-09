@@ -107,4 +107,24 @@ router.post('/booking', function(req, res, next) {
     })
 });
 
+router.post('/getBookings', function(req, res, next) {
+    userList.getBookings(req.session.user, function(err, row, fields) {
+        if (!err) {
+            console.log(row);
+            res.render('index', {
+                map: req.session.map,
+                user: req.session.user,
+                for (var i = 0; i < row.length; i++) {
+                    bookings: row[i];
+                }
+                //bookings: row
+            })
+        }
+        else {
+            console.log(err);
+        }
+    })
+});
+
+
 module.exports = router;
