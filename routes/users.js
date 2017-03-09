@@ -68,6 +68,7 @@ router.post('/login', function(req, res, next) {
             } else {
                 if (row[0].password == req.body.password) {
                     req.session.user = req.body.email;
+                    req.session.map = row[0].map;
                     console.log(req.body.email);
                     res.render('index', {
                         user: req.session.user,
@@ -92,6 +93,11 @@ router.post('/booking', function(req, res, next) {
         console.log(req.body.tableID);
         if(!err){
             console.log("booking of table " + req.body.tableID + " successful");
+            res.render('index', {
+                status: "Table " + req.body.tableID + " successfully booked",
+                map: req.session.map,
+                user: req.session.user
+            })
 
         }
         else {
