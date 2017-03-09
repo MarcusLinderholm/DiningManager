@@ -46,7 +46,7 @@ function updateDraw(board, bookedTables) {
               }
               break;
             default:
-              if(!bookedTables.includes(parseInt(board[i][j])){
+              if(!bookedTables.includes(parseInt(board[i][j]))){
                 for (n=0;n<imgData.data.length;n+=4){
                   imgData.data[n+0]=139;
                   imgData.data[n+1]=69;
