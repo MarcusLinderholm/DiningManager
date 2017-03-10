@@ -105,7 +105,7 @@ router.post('/login', function(req, res, next) {
 router.post('/booking', function(req, res, next) {
     userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
         //console.log(req.body.tableID);
-        if(!err){
+        if(!err && req.body.tableID != 0){
             console.log("booking of table " + req.body.tableID + " successful");
             var arr = [];
             userList.getBookings(req.session.user, function(err, row, fields) {
@@ -131,6 +131,11 @@ router.post('/booking', function(req, res, next) {
         }
         else {
             //console.log(req.body.tableID);
+            res.render('index', {
+                status: "You must choose a table to place a booking",
+                map: req.session.map,
+                user: req.session.user
+            })
             console.log(err);
         }
     })
