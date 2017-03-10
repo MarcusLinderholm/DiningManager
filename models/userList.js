@@ -64,7 +64,7 @@ UserList.prototype = (function() {
 
         getBookings: function(currEmail, callback) {
             var sql = "select * from bookings where email= '" + currEmail + "'";
-            console.log(sql);
+            //console.log(sql);
             db.execute(sql, callback);
         }
 

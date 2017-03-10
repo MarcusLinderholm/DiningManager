@@ -67,12 +67,26 @@ router.post('/login', function(req, res, next) {
                 });
             } else {
                 if (row[0].password == req.body.password) {
+                    var arr = [];
+                    userList.getBookings(req.body.email, function(err, row, fields) {
+                        if (!err) {
+                            console.log(row);
+                            for (var i = 0; i < row.length; i++) {
+                                arr[i] = {tableID: row[i].tableID, time: row[i].time};
+                            }
+                            console.log(arr);
+                        }
+                        else {
+                            console.log(err);
+                        }
+                    })
                     req.session.user = req.body.email;
                     req.session.map = row[0].map;
                     console.log(req.body.email);
                     res.render('index', {
                         user: req.session.user,
-                        map: row[0].map
+                        map: row[0].map,
+                        booking: arr
 
                     });
                 } else {
@@ -90,22 +104,40 @@ router.post('/login', function(req, res, next) {
 
 router.post('/booking', function(req, res, next) {
     userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
-        console.log(req.body.tableID);
+        //console.log(req.body.tableID);
         if(!err){
             console.log("booking of table " + req.body.tableID + " successful");
+            var arr = [];
+            userList.getBookings(req.session.user, function(err, row, fields) {
+                if (!err) {
+                    //console.log(row);
+                    for (var i = 0; i < row.length; i++) {
+                        arr[i] = {tableID: row[i].tableID, time: row[i].time};
+                    }
+                    console.log(arr);
+                }
+                else {
+                    console.log(err);
+                }
+            })
             res.render('index', {
+
                 status: "Table " + req.body.tableID + " successfully booked",
                 map: req.session.map,
-                user: req.session.user
+                user: req.session.user,
+                booking: arr
             })
 
         }
         else {
-            console.log(req.body.tableID);
+            //console.log(req.body.tableID);
             console.log(err);
         }
     })
 });
+
+
+
 
 router.post('/getBookings', function(req, res, next) {
     userList.getBookings(req.session.user, function(err, row, fields) {

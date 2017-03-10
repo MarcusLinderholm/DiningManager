@@ -29,9 +29,9 @@
 
 <form action="/users/booking" method="post">
 	TableID:<br>
-	<input type="text" id="tableID" name="tableID" value="" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" /><br> Timme:
+	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br> Time(hh:mm):
 	<br>
-	<input type="text" name="time" value=""><br> Duration:
+	<input type="text" name="time" value="12:00"><br> Duration:
 	<br>
 	<input type="text" name="duration" value="2 hours" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled"><br>
 	<input type="submit" value="Submit">
@@ -71,6 +71,13 @@
 	stringToMap(s);
 	var bookings = getBookings();
 	getBookedTables(bookings);
+	setInterval(function(){
+		var bookings = getBookings();
+		var bookedTables = getBookedTables(bookings);
+	//	updateDraw(stringToMap(s), bookedTables);
+		console.log("swag");
+	}, 1000);
+
 </script>
 <!--
 <table>
