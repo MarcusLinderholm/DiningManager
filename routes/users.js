@@ -60,7 +60,7 @@ router.post('/signup', function(req, res, next) {
 router.post('/login', function(req, res, next) {
     //console.log("add mail");
     var currentTime = new Date();
-    userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+    userList.removeBooking(req.body.email, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
         console.log(currentTime.getHours());
         if (!err) {
             console.log("Removed booking");
