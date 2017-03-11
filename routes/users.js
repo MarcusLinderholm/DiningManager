@@ -59,6 +59,13 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
     //console.log("add mail");
+    var currentTime = new Date();
+    userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+        console.log(currentTime.getHours());
+        if (!err) {
+            console.log("Removed booking");
+        }
+    })
     userList.userLookup(req.body.email, function(err, row, fields) {
         if (!err) {
             if (row.length == 0) {
@@ -73,7 +80,10 @@ router.post('/login', function(req, res, next) {
                         if (!err) {
                             //console.log(row);
                             for (var i = 0; i < row.length; i++) {
-                                arr[i] = {tableID: row[i].tableID, time: row[i].time};
+                                arr[i] = {
+                                    tableID: row[i].tableID,
+                                    time: row[i].time
+                                };
                             }
 
                             res.render('index', {
@@ -83,8 +93,7 @@ router.post('/login', function(req, res, next) {
 
                             });
                             //console.log(arr);
-                        }
-                        else {
+                        } else {
                             console.log(err);
                         }
                     })
@@ -106,41 +115,114 @@ router.post('/login', function(req, res, next) {
 
 
 router.post('/booking', function(req, res, next) {
-    userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
-        //console.log(req.body.tableID);
-        if(!err){
-            console.log("booking of table " + req.body.tableID + " successful");
+    var currentTime = new Date();
+    userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+        console.log(currentTime.getHours());
+        if (!err) {
+            console.log("Removed booking");
+        }
+    })
+    userList.getBookings(req.session.user, function(err, row, fields) {
+        if (!err) {
+            //console.log(row);
+            var currentTime = new Date();
             var arr = [];
-            userList.getBookings(req.session.user, function(err, row, fields) {
-                if (!err) {
-                    //console.log(row);
-                    for (var i = 0; i < row.length; i++) {
-                        arr[i] = {tableID: row[i].tableID, time: row[i].time};
-                    }
 
+            for (var i = 0; i < row.length; i++) {
+                arr[i] = {
+                    tableID: row[i].tableID,
+                    time: row[i].time
+                };
+            }
+            var check;
+            arr.forEach(function(booking) {
+                if (!(parseInt(booking.time.substring(0, 3)) <= parseInt(req.body.time.substring(0, 2))) &&
+                    !(parseInt(booking.time.substring(0, 3)) + 1 >= parseInt(req.body.time.substring(0, 2))) &&
+                    booking.tableID == req.body.tableID) {
+                    console.log(booking);
+                    console.log(parseInt(booking.time.substring(0, 3)) + 1);
+                    check = true;
 
-
-                    res.render('index', {
-
-                        status: "Table " + req.body.tableID + " successfully booked",
-                        map: req.session.map,
-                        user: req.session.user,
-                        booking: arr
-                    })
-                    console.log(arr);
-                }
-                else {
-                    console.log(err);
+                } else {
+                    check = false;
                 }
             })
 
+            console.log(check);
+            if (check) {
 
-        }
-        else {
-            //console.log(req.body.tableID);
+                res.render('index', {
+
+                    status: "Table already booked",
+                    map: req.session.map,
+                    user: req.session.user,
+                    booking: arr
+                })
+            } else {
+
+                userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields) {
+                    //console.log(req.body.tableID);
+                    if (!err) {
+                        var currentTime = new Date();
+                        userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+                            if (!err)
+                                userList.getBookings(req.session.user, function(err, row, fields) {
+                                    if (!err) {
+                                        for (var i = 0; i < row.length; i++) {
+                                            console.log(row[i].email);
+                                        }
+                                        //console.log(row);
+                                        var arr = [];
+                                        for (var i = 0; i < row.length; i++) {
+                                            arr[i] = {
+                                                tableID: row[i].tableID,
+                                                time: row[i].time
+                                            };
+                                        }
+
+
+                                        res.render('index', {
+
+                                            status: "Table " + req.body.tableID + " booked",
+                                            map: req.session.map,
+                                            user: req.session.user,
+                                            booking: arr
+                                        })
+
+                                    } else {
+                                        console.log(err);
+                                    }
+                                })
+                            console.log("inactive tables removed");
+                        })
+
+
+
+
+
+                    } else {
+                        //console.log(req.body.tableID);
+                        console.log(err);
+                    }
+                })
+
+            }
+
+
+
+
+
+
+
+
+
+        } else {
             console.log(err);
         }
+
+
     })
+
 });
 
 
@@ -162,7 +244,10 @@ router.post('/getBookings', function(req, res, next) {
             //console.log(row);
             var arr = [];
             for (var i = 0; i < row.length; i++) {
-                arr[i] = {tableID: row[i].tableID, time: row[i].time};
+                arr[i] = {
+                    tableID: row[i].tableID,
+                    time: row[i].time
+                };
             }
             console.log(arr);
             res.render('index', {
@@ -173,8 +258,7 @@ router.post('/getBookings', function(req, res, next) {
 
                 //bookings: row
             })
-        }
-        else {
+        } else {
             console.log(err);
         }
     })
