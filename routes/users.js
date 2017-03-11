@@ -66,6 +66,7 @@ router.post('/login', function(req, res, next) {
                     status: "User not registered"
                 });
             } else {
+                var map = row[0].map;
                 if (row[0].password == req.body.password) {
                     var arr = [];
                     userList.getBookings(req.body.email, function(err, row, fields) {
@@ -74,6 +75,13 @@ router.post('/login', function(req, res, next) {
                             for (var i = 0; i < row.length; i++) {
                                 arr[i] = {tableID: row[i].tableID, time: row[i].time};
                             }
+
+                            res.render('index', {
+                                user: req.session.user,
+                                map: map,
+                                booking: arr
+
+                            });
                             //console.log(arr);
                         }
                         else {
@@ -83,12 +91,7 @@ router.post('/login', function(req, res, next) {
                     req.session.user = req.body.email;
                     req.session.map = row[0].map;
                     console.log(req.body.email);
-                    res.render('index', {
-                        user: req.session.user,
-                        map: row[0].map,
-                        booking: arr
 
-                    });
                 } else {
                     res.render('login', {
                         status: "Wrong password"
@@ -103,7 +106,7 @@ router.post('/login', function(req, res, next) {
 
 
 router.post('/booking', function(req, res, next) {
-    userList.bookTable(req.session.user, req.body.tableID, req.body.time.substring(0,5), function(err, row, fields){
+    userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
         //console.log(req.body.tableID);
         if(!err){
             console.log("booking of table " + req.body.tableID + " successful");
@@ -114,6 +117,8 @@ router.post('/booking', function(req, res, next) {
                     for (var i = 0; i < row.length; i++) {
                         arr[i] = {tableID: row[i].tableID, time: row[i].time};
                     }
+
+
 
                     res.render('index', {
 

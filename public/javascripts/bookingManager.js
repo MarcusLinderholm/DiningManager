@@ -24,26 +24,25 @@ function getBookings(){
     var tables = document.getElementsByClassName("getTableID");
     var arr = [].slice.call(tables);
     arr.forEach(function(val) {
-        bookings.push({tableID:(val.innerHTML).substring(2,3), time:(val.innerHTML).substring(8,16)});
+        bookings.push({tableID:(val.innerHTML).substring(2,5), time:(val.innerHTML).substring(8,16)});
+        //console.log((val.innerHTML).substring(8,25));
+        //console.log((val.innerHTML).substring(2,5));
     });
     return bookings;
 }
 function getBookedTables(bookings){
     var currentTime = new Date();
     var bookedTables = []
+    var currTime = currentTime.getHours()*60*60 + currentTime.getMinutes()*60;
+    //console.log(currTime);
+    //console.log(bookings);
+    var bookingTime;
     bookings.forEach(function(booking){
-        if(parseInt(booking.time.substring(0,2))<=currentTime.getHours() && parseInt(booking.time.substring(0,2))+2>=currentTime.getHours() 
-        && parseInt(booking.time.substring(3,5))<=currentTime.getMinutes()){
-            bookedTables.push(parseInt(booking.tableID));
-            console.log("booked tables" + bookedTables);
+        if(parseInt(booking.time.substring(0,3))<=currentTime.getHours() && parseInt(booking.time.substring(0,3))+1>=currentTime.getHours()){
+        bookedTables.push(parseInt(booking.tableID));
+        console.log("booked tables" + bookedTables);
         }
-    //    if(!parseInt(booking.time.substring(0,2))<=currentTime.getHours() && !parseInt(booking.time.substring(0,2))+2>=currentTime.getHours() 
-    //    && !parseInt(booking.time.substring(3,5))<=currentTime.getMinutes()){
-        else{
-            
-            bookedTables.pop();
-            console.log("removed table " + booking.tableID);
-        }
+        
         
         
     });

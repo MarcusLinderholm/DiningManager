@@ -57,7 +57,7 @@ UserList.prototype = (function() {
 
         bookTable: function(email, table, time, callback){
             var sql = "insert into bookings (email, tableID, time)" +
-            "values('" + email + "', '" + table + "', '" + time + ":00" + "');"
+            "values('" + email + "', '" + table + "', '" + time + "');"
             db.execute(sql, callback);
 
         },

@@ -39,26 +39,11 @@
 </form>
 
 
-<script>
-	var s = "{{map}}"
-	map = stringToMap(s);
-	getTable(map);
-	stringToMap(s);
-	var bookings = getBookings();
-	getBookedTables(bookings);
-	setInterval(function(){
-		var bookings = getBookings();
-		var bookedTables = getBookedTables(bookings);
-		//updateDraw(stringToMap(s), bookedTables);
-		//console.log("swag");
-	}, 7000);
 
-</script>
 
 <form action="/users/getBookings" method="post">
 	<input type="submit" value="get bookings">
 </form>
-
 
 
 {{#booking}}
@@ -78,6 +63,20 @@
 {{/booking}}
 
 
+
+<script>
+var s = "{{map}}"
+map = stringToMap(s);
+getTable(map);
+var bookings = getBookings();
+getBookedTables(bookings);
+
+setInterval(function(){
+	getBookedTables(getBookings());
+	//console.log("swag");
+}, 7000);
+
+</script>
 
 
 
