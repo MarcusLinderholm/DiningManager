@@ -32,9 +32,20 @@ function getBookedTables(bookings){
     var currentTime = new Date();
     var bookedTables = []
     bookings.forEach(function(booking){
-        if(parseInt(booking.time.substring(0,2))<=currentTime.getHours() && parseInt(booking.time.substring(0,2))+2>=currentTime.getHours()){
+        if(parseInt(booking.time.substring(0,2))<=currentTime.getHours() && parseInt(booking.time.substring(0,2))+2>=currentTime.getHours() 
+        && parseInt(booking.time.substring(3,5))<=currentTime.getMinutes()){
             bookedTables.push(parseInt(booking.tableID));
+            console.log("booked tables" + bookedTables);
         }
+    //    if(!parseInt(booking.time.substring(0,2))<=currentTime.getHours() && !parseInt(booking.time.substring(0,2))+2>=currentTime.getHours() 
+    //    && !parseInt(booking.time.substring(3,5))<=currentTime.getMinutes()){
+        else{
+            
+            bookedTables.pop();
+            console.log("removed table " + booking.tableID);
+        }
+        
+        
     });
     updateDraw(map,bookedTables);
     return bookedTables;

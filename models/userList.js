@@ -63,7 +63,7 @@ UserList.prototype = (function() {
         },
 
         getBookings: function(currEmail, callback) {
-            var sql = "select * from bookings where email= '" + currEmail + "'";
+            var sql = "select * from bookings where email= '" + currEmail + "' ORDER BY time ASC";
             //console.log(sql);
             db.execute(sql, callback);
         }
