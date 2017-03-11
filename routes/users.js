@@ -147,6 +147,13 @@ router.post('/booking', function(req, res, next) {
 
 
 router.post('/getBookings', function(req, res, next) {
+    var currentTime = new Date();
+    userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+        console.log(currentTime.getHours());
+        if (!err) {
+            console.log("Removed booking");
+        }
+    })
     userList.getBookings(req.session.user, function(err, row, fields) {
         if (!err) {
             for (var i = 0; i < row.length; i++) {

@@ -62,6 +62,12 @@ UserList.prototype = (function() {
 
         },
 
+        removeBooking: function(currEmail, currTime, callback) {
+            var sql = "delete from bookings where email= '" + currEmail + "' and time<= '" + currTime + "';"
+            db.execute(sql, callback);
+            //delete from bookings where email=currEmail and time=currTime
+        },
+
         getBookings: function(currEmail, callback) {
             var sql = "select * from bookings where email= '" + currEmail + "' ORDER BY time ASC";
             //console.log(sql);
