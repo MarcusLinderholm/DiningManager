@@ -46,17 +46,27 @@
 </form>
 
 
+<table>
+	<tr>
+	  <th>Table</th>
+	  <th>Time</th>
+	</tr>
+</table>
+
 {{#booking}}
 <div class="getTableID">
-{{#tableID}}
-	{{.}}
+	<table>
+	  <tr>
+	    <td>{{#tableID}}
+			{{.}}
 
-{{/tableID}}
+		{{/tableID}}</td>
+	    <td>{{#time}}
+			{{.}}
+		{{/time}}</td>
+	  </tr>
 
-
-{{#time}}
-	{{.}}
-{{/time}}
+	</table>
 
 </div>
 

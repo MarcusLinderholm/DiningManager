@@ -59,7 +59,6 @@ UserList.prototype = (function() {
             var sql = "insert into bookings (email, tableID, time)" +
             "values('" + email + "', '" + table + "', '" + time + "');"
             db.execute(sql, callback);
-
         },
 
         removeBooking: function(currEmail, currTime, callback) {
