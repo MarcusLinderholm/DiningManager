@@ -17,10 +17,6 @@
 
 </head>
 
-
-
-
-
 <center>
 	<canvas id="canvas" width="100%" height="100%"></canvas>
 </center>
@@ -38,10 +34,6 @@
 	<input type="submit" value="Submit">
 
 </form>
-
-
-
-
 
 
 <table>
@@ -85,16 +77,14 @@
 </p>
 <form action="/users/deleteBooking" method="post">
 	Table ID: <br>
-	<input type="text" name="id" value="" /><br> Time(hh):
+	<input type="text" name="id" value="" /><br>
+	Time(hh):
 	<br>
 	<input type="text" name="time" value="12" />
 	<br>
 	<input type="submit" name="delete" value="Delete" />
 
 </form>
-
-
-
 
 <script>
 	var s = "{{map}}"
@@ -108,23 +98,6 @@
 		console.log("updated");
 	}, 7000);
 </script>
-
-
-
-
-<!--
-<table>
-	{{#bookings}}
-	<tr>
-		<td>{{ bookings.tableID }}</td>
-	</tr>
-	<tr>
-		<td>{{ bookings.time }}</td>
-	</tr>
-	{{/bookings}}
-</table>
-!-->
-
 
 
 </html>
