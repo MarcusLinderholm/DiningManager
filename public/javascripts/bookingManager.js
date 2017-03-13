@@ -16,7 +16,6 @@ function getTable(map) {
             x: Math.floor(((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width) / scale),
             y: Math.floor(((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height) / scale)
         };
-        console.log(map[pos.y][pos.x]);
         document.getElementById("tableID").value = map[pos.y][pos.x];
     }, false);
 }
