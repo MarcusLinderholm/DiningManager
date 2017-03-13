@@ -16,25 +16,18 @@ function tableCreator() {
             x: Math.floor(((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width) / scale),
             y: Math.floor(((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height) / scale)
         };
-        //if (document.getElementById("tableCheckBox").checked) {
+
         if (!overlaps(pos.x, pos.y, tableSize)) {
             tables++;
             addTable(pos.x, pos.y, tableSize, tables);
             tableArray.push(tables);
         }
-        //}
+
     }, false);
 }
 
 function restaurantCreator() {
-    /*
-    Map where Email is currentEmail <- mapToString(currentMap)
-    createTable id, email <- tableArray.forEach
-    */
-    tableArray.forEach(function(table) {
-        //console.log(table);
-    });
-    //mapToString(currentMap);
+
     document.getElementById('map').value = mapToString(currentMap);
     document.getElementById('tables').value = tableArray.length;
 }

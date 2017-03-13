@@ -3,6 +3,7 @@ var router = express.Router();
 var dbFunc = require('../models/dbFunc.js')
 var mapManager = require('../public/javascripts/mapManager.js')
 
+
 router.get('/', function(req, res, next) {
     res.render('login');
 });
@@ -99,10 +100,12 @@ router.post('/deleteBooking', function(req, res, next) {
 router.post('/booking', function(req, res, next) {
     var timeArr = [];
     var check;
+    //check if a table is selected
     if (req.body.tableID != 0) {
+        //retrieve bookings for this table
         dbFunc.getTableBookings(req.session.user, req.body.tableID, function(err, row, fields) {
             if (!err) {
-
+                //Put the query results in a new array
                 for (var i = 0; i < row.length; i++) {
                     timeArr[i] = {
                         time: row[i].time,
@@ -112,17 +115,13 @@ router.post('/booking', function(req, res, next) {
 
 
                 if (timeArr.length != 0) {
-
-
+                    //Check if the given booking time is already in use at this table (returns true if time is available)
                     check = timeArr.every(function(val) {
-
                         if (req.body.time < (parseInt(val.time.substring(0, 2)) - 1) ||
                             req.body.time > (parseInt(val.time.substring(0, 2)) + 1) ||
                             req.body.time != (parseInt(val.time.substring(0, 2)))) {
 
                         }
-
-
                     })
 
                     console.log(check);
