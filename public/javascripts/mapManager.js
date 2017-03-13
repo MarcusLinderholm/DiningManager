@@ -1,3 +1,10 @@
+/*
+*Creates a matrix size "dimension"
+*and fills it with all zero(floor)
+*then draws it onto the canvas
+*returns nothing
+*/
+
 function clearMap(dimension){
   currentMap = [];
   for(i=0;i<dimension;i++){
@@ -6,10 +13,12 @@ function clearMap(dimension){
       currentMap[i][j] = 0;
     }
   }
-  
   draw(currentMap);
 }
-
+/*
+*If there is a table at any of the affected pixels
+*return false
+*/
 function overlaps(xCord, yCord, size){
   for(i=0;i<size;i++){
     for(j=0;j<size;j++){
@@ -21,6 +30,10 @@ function overlaps(xCord, yCord, size){
   return false;
 }
 
+/*
+*Adds a table of size "size" at "xCord","yCord" with id "id"
+*then redraws the map
+*/
 function addTable(xCord, yCord, size, id){
   for(i=0;i<size;i++){
     for(j=0;j<size;j++){
@@ -32,6 +45,10 @@ function addTable(xCord, yCord, size, id){
   draw(currentMap);
 }
 
+/*
+*Converts 2D-array to String for
+*database storage
+*/
 function mapToString(map){
   var jsonString = "";
   map.forEach(function(row){
@@ -40,7 +57,10 @@ function mapToString(map){
   return jsonString;
 }
 
-
+/*
+*Reverses the conversion for
+*database retrieval
+*/
 function stringToMap(mapString){
     var array = mapString.toString().split("|");
     var map = [];

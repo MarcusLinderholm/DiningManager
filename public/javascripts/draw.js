@@ -1,3 +1,9 @@
+/*
+*Draws to "canvas"
+*color is decided based on the map
+*where every element == 0 is considered floor
+*and != tables
+*/
 function draw(board) {
   var canvas = document.getElementById("canvas");
   if (canvas.getContext) {
@@ -28,6 +34,13 @@ function draw(board) {
     }
   }
 }
+
+/*
+*Draws to "canvas"
+*tableIDs that exist in "bookedTables"
+*(tables that are currently booked)
+*are drawn in another color.
+*/
 function updateDraw(board, bookedTables) {
   var canvas = document.getElementById("canvas");
   if (canvas.getContext) {
