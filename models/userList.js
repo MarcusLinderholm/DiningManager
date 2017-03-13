@@ -8,13 +8,25 @@
 
 var db = require('../db/userdb.js');
 
-function dbFunc(db) {
+function UserList(db) {
     this.db = db;
 }
 
-dbFunc.prototype = (function() {
+UserList.prototype = (function() {
     return {
+        getUsers: function(callback) {
+            //console.log("Get persons db is " + db);
+            var sql = 'select * from members;';
+            db.execute(sql, callback);
+        },
+        getById: function(id, callback) {
+            var sql = 'select * from members where id=' + id + ";";
+            db.execute(sql, callback);
+        },
+
         userLookup: function(email, callback) {
+            //var sql = 'select * from members;';
+            //var sql = "select password from members where email=" + email + ";";
             var sql = "select * from members where email='" + email + "';";
             db.execute(sql, callback);
 
@@ -22,12 +34,19 @@ dbFunc.prototype = (function() {
 
 
         addUser: function(email, password, map, callback) {
+
+
             var sql = "insert into members (email, password, map)" +
-                      "values('" + email + "', '" + password + "', '" + map + "');"
+
+                "values('" + email + "', '" + password + "', '" + map + "');"
+
+            //console.log(db.execute(sql, callback));
+
             db.execute(sql, callback);
         },
 
         addTable: function(email, tables, callback) {
+
             for (var i = 1; i < parseInt(tables) + 1; i++) {
                 var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
@@ -69,4 +88,4 @@ dbFunc.prototype = (function() {
     }
 })();
 
-module.exports = new dbFunc(db);
+module.exports = new UserList(db);
