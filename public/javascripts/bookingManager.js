@@ -26,7 +26,7 @@ function getBookings(){
 
     arr.forEach(function(val) {
         
-        bookings.push({tableID:(val.innerText).substring(0,2), time:(val.innerText).substring(2,7)});
+        bookings.push({tableID:(val.innerText).substring(0,2).replace(/\s+/g, ''), time:(val.innerText).substring(2,5).replace(/\s+/g, '')});
         //console.log((val.innerHTML).substring(14,17));
         //console.log((val.innerHTML).substring(8,26));
     });
@@ -35,38 +35,13 @@ function getBookings(){
 }
 function getBookedTables(bookings){
     var currentTime = new Date();
-    var bookedTables = []
-    var currTime = currentTime.getHours()*60*60 + currentTime.getMinutes()*60;
-    //console.log(currTime);
-    //console.log(bookings);
-    var bookingTime;
+    var bookedTables = [];
     bookings.forEach(function(booking){
         if(parseInt(booking.time.substring(0,3))<=currentTime.getHours() && parseInt(booking.time.substring(0,3))+1>=currentTime.getHours()){ 
             
             bookedTables.push(parseInt(booking.tableID));
-            //console.log("booked tables" + bookedTables);
         }
-        /*if(!(parseInt(booking.time.substring(0,3))+1>=currentTime.getHours())){
-            bookedTables.splice(bookings.indexOf(booking.tableID), 1);
-        }
-        */
-        //else{
-        //bookingTime = (2+parseInt(booking.time.substring(0,2)))*60*60;
-        
-        //bookingTime = (parseInt(booking.time.substring(0,3))+2)*60*60 + parseInt(booking.time.substring(4,6))*60;
-        //console.log(booking.time.substring(0,3));
-        //console.log(bookingTime);
-        
-        //if(bookingTime < currTime){
-        //    bookedTables.push(parseInt(booking.tableID));
-        //    console.log("table booked" + booking.tableID);
-        //}
-        
-        
-            
-        //    bookedTables.pop();
-        //    console.log("removed table " + booking.tableID);
-        //}
+
         
         
     });

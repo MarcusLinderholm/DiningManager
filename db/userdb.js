@@ -13,13 +13,13 @@ var pool = mysql.createPool({
     user: 'sebastian',
     password: 'hejsan',
     database: 'diningmanager',
-    //debug: true // This is GOOD !!!
+
 });
 
 module.exports = {
     // Will return result
     execute: function(sql, resultcallback) {
-        //console.log("hej");
+
         pool.getConnection(function(err, con) {
             if (err) {
                 console.log("Query failed: " + sql + err)
@@ -28,43 +28,6 @@ module.exports = {
             }
             con.release();
         });
-
-
-
-            /*
-            con.query(sql, resultcallback){
-                    if(resultcallback){
-
-                        console.log(error);
-
-
-                    }
-                    else {
-                        //console.log("fields:" + fields)
-                        resultcallback(null, true);
-                        console.log("query done");
-
-                    }
-
-            });
-
-
-            con.release();
-*/
-
-
-            /*
-            if (err) {
-                console.log("Query failed: " + sql + err)
-            }
-            else {
-                con.query(sql, resultcallback);
-                console.log("connection established");
-            }
-            con.release();
-
-            */
-
 
     },
     // No result
