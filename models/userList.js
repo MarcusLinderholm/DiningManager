@@ -55,9 +55,9 @@ UserList.prototype = (function() {
             }
         },
 
-        bookTable: function(email, table, time, callback){
-            var sql = "insert into bookings (email, tableID, time)" +
-            "values('" + email + "', '" + table + "', '" + time + "');"
+        bookTable: function(email, table, time, name, callback){
+            var sql = "insert into bookings (email, name, tableID, time)" +
+            "values('" + email + "', '" + name + "', '" + table + "', '" + time + "');"
             db.execute(sql, callback);
         },
 

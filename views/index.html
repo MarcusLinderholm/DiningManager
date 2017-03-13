@@ -29,7 +29,10 @@
 
 <form action="/users/booking" method="post">
 	TableID:<br>
-	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br> Time(hh:mm):
+	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br>
+	Name:
+	<br><input type="text" name="name" value=""><br>
+	 Time(hh:mm):
 	<br>
 	<input type="text" name="time" value="12:00"><br> Duration:
 	<br>
@@ -51,6 +54,7 @@
 <table>
 	<tr>
 		<th>Table</th>
+		<th>Name</th>
 		<th>Time</th>
 	</tr>
 </table>
@@ -66,6 +70,9 @@
 			<tr>
 				<td>{{#tableID}} {{.}} {{/tableID}}
 
+				</td>
+
+				<td>{{#name}} {{.}} {{/name}}
 				</td>
 
 				<td>{{#time}} {{.}} {{/time}}

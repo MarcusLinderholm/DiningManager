@@ -27,6 +27,7 @@ CREATE TABLE `tables` (
 
 CREATE TABLE `bookings` (
   `email` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `tableID` int(11) NOT NULL,
   `time` time NOT NULL,
   `duration` int(11) NOT NULL DEFAULT '7200',

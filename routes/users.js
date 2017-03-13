@@ -82,7 +82,8 @@ router.post('/login', function(req, res, next) {
                             for (var i = 0; i < row.length; i++) {
                                 arr[i] = {
                                     tableID: row[i].tableID,
-                                    time: row[i].time
+                                    time: row[i].time,
+                                    name: row[i].name
                                 };
                             }
                             //console.log(arr);
@@ -127,7 +128,8 @@ router.post('/deleteBooking', function(req, res, next) {
                     for (var i = 0; i < row.length; i++) {
                         arr[i] = {
                             tableID: row[i].tableID,
-                            time: row[i].time
+                            time: row[i].time,
+                            name: row[i].name
                         };
                     }
                     console.log(arr);
@@ -152,7 +154,7 @@ router.post('/deleteBooking', function(req, res, next) {
 
 router.post('/booking', function(req, res, next) {
     if (req.body.tableID != 0) {
-        userList.bookTable(req.session.user, req.body.tableID, req.body.time, function(err, row, fields) {
+        userList.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
             if (!err) {
                 var currentTime = new Date();
                 userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
@@ -164,7 +166,8 @@ router.post('/booking', function(req, res, next) {
                                 for (var i = 0; i < row.length; i++) {
                                     arr[i] = {
                                         tableID: row[i].tableID,
-                                        time: row[i].time
+                                        time: row[i].time,
+                                        name: row[i].name
                                     };
                                 }
                                 console.log(arr);
@@ -224,7 +227,8 @@ router.post('/getBookings', function(req, res, next) {
             for (var i = 0; i < row.length; i++) {
                 arr[i] = {
                     tableID: row[i].tableID,
-                    time: row[i].time
+                    time: row[i].time,
+                    name: row[i].name
                 };
             }
             console.log(arr);
