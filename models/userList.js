@@ -73,7 +73,7 @@ UserList.prototype = (function() {
             db.execute(sql, callback);
         },
 
-        deleteBooking: function(currEmail, id, time, callback){
+        deleteBooking: function(currEmail, id, currTime, callback){
             var sql = "delete from bookings where email= '" + currEmail + "' and time== '" + currTime + "' and id== '" + id + "';"
             db.execute(sql, callback);
 

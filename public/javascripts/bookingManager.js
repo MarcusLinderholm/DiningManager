@@ -24,10 +24,12 @@ function getBookings(){
     var tables = document.getElementsByClassName("getTableID");
     var arr = [].slice.call(tables);
     arr.forEach(function(val) {
+        console.log(val.innerHTML);
         bookings.push({tableID:(val.innerHTML).substring(2,5), time:(val.innerHTML).substring(8,16)});
         //console.log((val.innerHTML).substring(2,5));
         //console.log((val.innerHTML).substring(8,26));
     });
+    console.log(bookings);
     return bookings;
 }
 function getBookedTables(bookings){
@@ -43,9 +45,10 @@ function getBookedTables(bookings){
             bookedTables.push(parseInt(booking.tableID));
             //console.log("booked tables" + bookedTables);
         }
-        if(!(parseInt(booking.time.substring(0,3))+1>=currentTime.getHours())){
+        /*if(!(parseInt(booking.time.substring(0,3))+1>=currentTime.getHours())){
             bookedTables.splice(bookings.indexOf(booking.tableID), 1);
         }
+        */
         //else{
         //bookingTime = (2+parseInt(booking.time.substring(0,2)))*60*60;
         
@@ -66,6 +69,7 @@ function getBookedTables(bookings){
         
         
     });
+    console.log(bookedTables);
     updateDraw(map,bookedTables);
     return bookedTables;
 }
