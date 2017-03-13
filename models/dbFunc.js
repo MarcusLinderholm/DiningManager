@@ -8,22 +8,12 @@
 
 var db = require('../db/userdb.js');
 
-function UserList(db) {
+function dbFunc(db) {
     this.db = db;
 }
 
-UserList.prototype = (function() {
+dbFunc.prototype = (function() {
     return {
-        getUsers: function(callback) {
-            //console.log("Get persons db is " + db);
-            var sql = 'select * from members;';
-            db.execute(sql, callback);
-        },
-        getById: function(id, callback) {
-            var sql = 'select * from members where id=' + id + ";";
-            db.execute(sql, callback);
-        },
-
         userLookup: function(email, callback) {
             //var sql = 'select * from members;';
             //var sql = "select password from members where email=" + email + ";";
@@ -34,19 +24,12 @@ UserList.prototype = (function() {
 
 
         addUser: function(email, password, map, callback) {
-
-
             var sql = "insert into members (email, password, map)" +
-
-                "values('" + email + "', '" + password + "', '" + map + "');"
-
-            //console.log(db.execute(sql, callback));
-
+                      "values('" + email + "', '" + password + "', '" + map + "');"
             db.execute(sql, callback);
         },
 
         addTable: function(email, tables, callback) {
-
             for (var i = 1; i < parseInt(tables) + 1; i++) {
                 var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
@@ -61,7 +44,7 @@ UserList.prototype = (function() {
             db.execute(sql, callback);
         },
 
-        removeBooking: function(email, currTime, callback) {
+        deleteBookingsByTime: function(email, currTime, callback) {
             var sql = "delete from bookings where email= '" + email + "' and time<= '" + currTime + "';"
             db.execute(sql, callback);
             //delete from bookings where email=currEmail and time=currTime
@@ -88,4 +71,4 @@ UserList.prototype = (function() {
     }
 })();
 
-module.exports = new UserList(db);
+module.exports = new dbFunc(db);
