@@ -74,7 +74,7 @@ UserList.prototype = (function() {
         },
 
         deleteBooking: function(currEmail, id, currTime, callback){
-            var sql = "delete from bookings where email= '" + currEmail + "' and time== '" + currTime + "' and id== '" + id + "';"
+            var sql = "delete from bookings where email= '" + currEmail + "' and time= '" + currTime + "' and tableID= '" + id + "';"
             db.execute(sql, callback);
 
         }

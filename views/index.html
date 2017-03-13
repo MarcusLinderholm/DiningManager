@@ -29,10 +29,8 @@
 
 <form action="/users/booking" method="post">
 	TableID:<br>
-	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br>
-	Name:
-	<br><input type="text" name="name" value=""><br>
-	 Time(hh:mm):
+	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br> Name:
+	<br><input type="text" name="name" value=""><br> Time(hh:mm):
 	<br>
 	<input type="text" name="time" value="12:00"><br> Duration:
 	<br>
@@ -59,40 +57,48 @@
 	</tr>
 </table>
 
+{{#booking}}
+
+
+<div class="getTableID">
+	<table>
+		<tr>
+			<td>{{#tableID}} {{.}} {{/tableID}}
+
+			</td>
+
+			<td>{{#name}} {{.}} {{/name}}
+			</td>
+
+			<td>{{#time}} {{.}} {{/time}}
+			</td>
+
+
+
+			<td>
+
+			</td>
+
+		</tr>
+
+	</table>
+</div>
+
+
+
+{{/booking}}
+
+<p>
+	Delete booking:
+</p>
 <form action="/users/deleteBooking" method="post">
-	{{#booking}}
-	<input type="hidden" name="id" value="{{booking.tableID}}" />
-	<input type="hidden" name="time" value="{{booking.time}}" />
+	Table ID: <br>
+	<input type="text" name="id" value="" /><br> Time:
+	<br>
+	<input type="text" name="time" value="12:00" />
+	<br>
+	<input type="submit" name="delete" value="Delete" />
 
-
-	<div class="getTableID">
-		<table>
-			<tr>
-				<td>{{#tableID}} {{.}} {{/tableID}}
-
-				</td>
-
-				<td>{{#name}} {{.}} {{/name}}
-				</td>
-
-				<td>{{#time}} {{.}} {{/time}}
-				</td>
-
-				<td>
-					<input type="submit" name="delete" value="Delete" />
-				</td>
-				<td>
-
-				</td>
-
-			</tr>
-
-		</table>
-	</div>
-
-
-
-	{{/booking}}
 </form>
 
 
