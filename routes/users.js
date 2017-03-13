@@ -113,6 +113,43 @@ router.post('/login', function(req, res, next) {
 
 });
 
+router.post('/deleteBooking', function(req, res, next) {
+    userList.deleteBooking(req.session.user, req.body.tableID, req.body.time, function(err, row, fields){
+        if(!err){
+            console.log("booking removed");
+            userList.getBookings(req.session.user, function(err, row, fields) {
+                if (!err) {
+                    for (var i = 0; i < row.length; i++) {
+                        console.log(row[i].email);
+                    }
+                    //console.log(row);
+                    var arr = [];
+                    for (var i = 0; i < row.length; i++) {
+                        arr[i] = {
+                            tableID: row[i].tableID,
+                            time: row[i].time
+                        };
+                    }
+                    console.log(arr);
+                    res.render('index', {
+                        status: "Booking removed",
+                        map: req.session.map,
+                        user: req.session.user,
+                        booking: arr
+
+
+                        //bookings: row
+                    })
+                } else {
+                    console.log(err);
+                }
+            })
+        }
+        else {
+            console.log(err);
+        }
+    })
+});
 
 router.post('/booking', function(req, res, next) {
             var currentTime = new Date();

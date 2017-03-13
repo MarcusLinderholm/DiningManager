@@ -48,23 +48,29 @@
 
 <table>
 	<tr>
-	  <th>Table</th>
-	  <th>Time</th>
+		<th>Table</th>
+		<th>Time</th>
 	</tr>
 </table>
 
+<form action="/users/deleteBooking" method="post">
+
+</form>
 {{#booking}}
+<input type="hidden" name="id" value="{{booking.tableID}}" />
+<input type="hidden" name="time" value="{{booking.time}}" />
 <div class="getTableID">
 	<table>
-	  <tr>
-	    <td>{{#tableID}}
-			{{.}}
+		<tr>
+			<td>{{#tableID}} {{.}} {{/tableID}}
 
-		{{/tableID}}</td>
-	    <td>{{#time}}
-			{{.}}
-		{{/time}}</td>
-	  </tr>
+			</td>
+			<td>{{#time}} {{.}} {{/time}}
+			</td>
+			<td>
+				<input type="submit" name="delete" value="Delete" />
+			</td>
+		</tr>
 
 	</table>
 
@@ -72,20 +78,20 @@
 
 {{/booking}}
 
+</form>
 
 
 <script>
-var s = "{{map}}"
-map = stringToMap(s);
-getTable(map);
-var bookings = getBookings();
-getBookedTables(bookings);
+	var s = "{{map}}"
+	map = stringToMap(s);
+	getTable(map);
+	var bookings = getBookings();
+	getBookedTables(bookings);
 
-setInterval(function(){
-	getBookedTables(getBookings());
-	console.log("updated");
-}, 7000);
-
+	setInterval(function() {
+		getBookedTables(getBookings());
+		console.log("updated");
+	}, 7000);
 </script>
 
 

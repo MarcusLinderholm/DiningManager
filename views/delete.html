@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<!-- NOTHING TO DO HERE -->
+{{ >partials/head }}
+
+<body>
+	{{ >partials/header}}
+	<p> Delete {{ note.id}}</p>
+	<form action="/todo/list/delete" method="post">
+		<input type="hidden" name="id" value="{{note.id}}" />
+		<table>
+			{{#note}}
+			<tr>
+				<td>{{ note.id}} </td>
+			</tr>
+			<tr>
+				<td>{{ note.text}}</td>
+			</tr>
+			<tr>
+				<td>{{ note.dateTime}}</td>
+			</tr>
+			<tr>
+				<td><input type="submit" name="delete" value="Delete" /></td>
+			</tr>
+			{{/note}}
+		</table>
+	</form>
+	<a href="/todo/list" )> Cancel</a>
+	<p>{{ >partials/footer }}</p>
+</body>
+
+</html>
+<!--
+extend layout
+
+block content
+	h1= title
+	p= note.id
+	p= note.dateTime
+	p= note.text
+	p
+		form( action="/todo/list/delete" method="post")
+			input(type="hidden", name="id" value= note.id)
+			input(type="submit", name="delete" value="Delete")
+	p
+		a(href="/todo/list") Cancel
+		-->
