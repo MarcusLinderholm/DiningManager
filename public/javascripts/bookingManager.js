@@ -30,7 +30,7 @@ function getBookings(){
         //console.log((val.innerHTML).substring(14,17));
         //console.log((val.innerHTML).substring(8,26));
     });
-    console.log(bookings);
+    //console.log(bookings);
     return bookings;
 }
 function getBookedTables(bookings){
@@ -45,7 +45,7 @@ function getBookedTables(bookings){
         
         
     });
-    console.log(bookedTables);
+    //console.log(bookedTables);
     updateDraw(map,bookedTables);
     return bookedTables;
 }

@@ -97,12 +97,70 @@ router.post('/deleteBooking', function(req, res, next) {
 });
 
 router.post('/booking', function(req, res, next) {
+    var timeArr = [];
+    var check;
     if (req.body.tableID != 0) {
-        userList.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
+        userList.getTableBookings(req.session.user, req.body.tableID, function(err, row, fields) {
             if (!err) {
-                var currentTime = new Date();
-                userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
-                    if (!err) {
+                
+                for (var i = 0; i < row.length; i++) {
+                    timeArr[i] = {
+                        time: row[i].time,
+                        name: row[i].name
+                    };
+                }
+
+
+                if (timeArr.length != 0) {
+
+
+                    check = timeArr.every(function(val) {
+
+                        if (req.body.time < (parseInt(val.time.substring(0, 2)) - 1) ||
+                            req.body.time > (parseInt(val.time.substring(0, 2)) + 1) ||
+                            req.body.time != (parseInt(val.time.substring(0, 2)))) {
+
+                        }
+
+
+                    })
+
+                    console.log(check);
+
+
+                    if (check) {
+                        userList.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
+                            if (!err) {
+                                var currentTime = new Date();
+                                userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+                                    if (!err) {
+                                        userList.getBookings(req.session.user, function(err, row, fields) {
+                                            if (!err) {
+                                                var arr = [];
+                                                for (var i = 0; i < row.length; i++) {
+                                                    arr[i] = {
+                                                        tableID: row[i].tableID,
+                                                        time: row[i].time,
+                                                        name: row[i].name
+                                                    };
+                                                }
+                                                res.render('index', {
+                                                    status: "Table " + req.body.tableID + " booked",
+                                                    map: req.session.map,
+                                                    user: req.session.user,
+                                                    booking: arr
+                                                })
+                                            } else {
+                                                console.log(err);
+                                            }
+                                        })
+                                    }
+                                })
+                            } else {
+                                console.log(err);
+                            }
+                        })
+                    } else {
                         userList.getBookings(req.session.user, function(err, row, fields) {
                             if (!err) {
                                 var arr = [];
@@ -114,7 +172,7 @@ router.post('/booking', function(req, res, next) {
                                     };
                                 }
                                 res.render('index', {
-                                    status: "Table " + req.body.tableID + " booked",
+                                    status: "Table " + req.body.tableID + " is booked during this time. Please choose another time.",
                                     map: req.session.map,
                                     user: req.session.user,
                                     booking: arr
@@ -124,19 +182,63 @@ router.post('/booking', function(req, res, next) {
                             }
                         })
                     }
-                })
-            } else {
-                console.log(err);
+
+                } else {
+                    userList.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
+                        if (!err) {
+                            var currentTime = new Date();
+                            userList.removeBooking(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+                                if (!err) {
+                                    userList.getBookings(req.session.user, function(err, row, fields) {
+                                        if (!err) {
+                                            var arr = [];
+                                            for (var i = 0; i < row.length; i++) {
+                                                arr[i] = {
+                                                    tableID: row[i].tableID,
+                                                    time: row[i].time,
+                                                    name: row[i].name
+                                                };
+                                            }
+                                            res.render('index', {
+                                                status: "Table " + req.body.tableID + " booked",
+                                                map: req.session.map,
+                                                user: req.session.user,
+                                                booking: arr
+                                            })
+                                        } else {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            })
+                        } else {
+                            console.log(err);
+                        }
+                    })
+                }
+
             }
         })
+
+
+
+
+
+
+
+
+
     } else {
         res.render('index', {
             status: "Please select a table",
             map: req.session.map,
             user: req.session.user,
-            booking: arr
+            booking: timeArr
         })
     }
+
+
+
 });
 
 router.post('/getBookings', function(req, res, next) {

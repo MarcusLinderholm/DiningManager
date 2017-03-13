@@ -48,33 +48,38 @@ UserList.prototype = (function() {
         addTable: function(email, tables, callback) {
 
             for (var i = 1; i < parseInt(tables) + 1; i++) {
-                    var sql = "insert into tables (email, tableID)" +
+                var sql = "insert into tables (email, tableID)" +
                     "values('" + email + "', '" + i + "');"
-                    db.execute(sql, callback);
+                db.execute(sql, callback);
 
             }
         },
 
-        bookTable: function(email, table, time, name, callback){
+        bookTable: function(email, table, time, name, callback) {
             var sql = "insert into bookings (email, name, tableID, time)" +
-            "values('" + email + "', '" + name + "', '" + table + "', '" + time + ":00" + "');"
+                "values('" + email + "', '" + name + "', '" + table + "', '" + time + ":00" + "');"
             db.execute(sql, callback);
         },
 
-        removeBooking: function(currEmail, currTime, callback) {
-            var sql = "delete from bookings where email= '" + currEmail + "' and time<= '" + currTime + "';"
+        removeBooking: function(email, currTime, callback) {
+            var sql = "delete from bookings where email= '" + email + "' and time<= '" + currTime + "';"
             db.execute(sql, callback);
             //delete from bookings where email=currEmail and time=currTime
         },
 
-        getBookings: function(currEmail, callback) {
-            var sql = "select * from bookings where email= '" + currEmail + "' ORDER BY time ASC";
+        getBookings: function(email, callback) {
+            var sql = "select * from bookings where email= '" + email + "' ORDER BY time ASC";
             //console.log(sql);
             db.execute(sql, callback);
         },
 
-        deleteBooking: function(currEmail, id, time, callback){
-            var sql = "delete from bookings where email= '" + currEmail + "' and time= '" + time + ":00" + "' and tableID= '" + id + "';"
+        getTableBookings: function(email, table, callback) {
+            var sql = "select * from bookings where email= '" + email + "' and tableID= '" + table + "';"
+            db.execute(sql, callback);
+        },
+
+        deleteBooking: function(email, id, time, callback) {
+            var sql = "delete from bookings where email= '" + email + "' and time= '" + time + ":00" + "' and tableID= '" + id + "';"
             db.execute(sql, callback);
 
         }
