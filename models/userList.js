@@ -57,7 +57,7 @@ UserList.prototype = (function() {
 
         bookTable: function(email, table, time, name, callback){
             var sql = "insert into bookings (email, name, tableID, time)" +
-            "values('" + email + "', '" + name + "', '" + table + "', '" + time + "');"
+            "values('" + email + "', '" + name + "', '" + table + "', '" + time + ":00" + "');"
             db.execute(sql, callback);
         },
 
@@ -73,8 +73,8 @@ UserList.prototype = (function() {
             db.execute(sql, callback);
         },
 
-        deleteBooking: function(currEmail, id, currTime, callback){
-            var sql = "delete from bookings where email= '" + currEmail + "' and time= '" + currTime + "' and tableID= '" + id + "';"
+        deleteBooking: function(currEmail, id, time, callback){
+            var sql = "delete from bookings where email= '" + currEmail + "' and time= '" + time + ":00" + "' and tableID= '" + id + "';"
             db.execute(sql, callback);
 
         }

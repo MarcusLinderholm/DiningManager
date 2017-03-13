@@ -30,9 +30,9 @@
 <form action="/users/booking" method="post">
 	TableID:<br>
 	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br> Name:
-	<br><input type="text" name="name" value=""><br> Time(hh:mm):
+	<br><input type="text" name="name" value=""><br> Time(hh):
 	<br>
-	<input type="text" name="time" value="12:00"><br> Duration:
+	<input type="text" name="time" value="12"><br> Duration:
 	<br>
 	<input type="text" name="duration" value="2 hours" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled"><br>
 	<input type="submit" value="Submit">
@@ -42,18 +42,13 @@
 
 
 
-<form action="/users/getBookings" method="post">
-	<input type="submit" value="get bookings">
-</form>
-
-
 
 
 <table>
 	<tr>
 		<th>Table</th>
-		<th>Name</th>
 		<th>Time</th>
+		<th>Name</th>
 	</tr>
 </table>
 
@@ -62,25 +57,22 @@
 
 <div class="getTableID">
 	<table>
-		<tr>
-			<td>{{#tableID}} {{.}} {{/tableID}}
+		<tbody>
 
-			</td>
+			<tr>
+				<td>{{#tableID}} {{.}} {{/tableID}}
 
-			<td>{{#name}} {{.}} {{/name}}
-			</td>
+				</td>
 
-			<td>{{#time}} {{.}} {{/time}}
-			</td>
+				<td>{{#time}} {{.}} {{/time}}
+				</td>
 
+				<td>{{#name}} {{.}} {{/name}}
+				</td>
 
+			</tr>
 
-			<td>
-
-			</td>
-
-		</tr>
-
+		</tbody>
 	</table>
 </div>
 
@@ -93,9 +85,9 @@
 </p>
 <form action="/users/deleteBooking" method="post">
 	Table ID: <br>
-	<input type="text" name="id" value="" /><br> Time:
+	<input type="text" name="id" value="" /><br> Time(hh):
 	<br>
-	<input type="text" name="time" value="12:00" />
+	<input type="text" name="time" value="12" />
 	<br>
 	<input type="submit" name="delete" value="Delete" />
 

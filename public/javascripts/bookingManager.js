@@ -23,10 +23,11 @@ function getBookings(){
     var bookings = [];
     var tables = document.getElementsByClassName("getTableID");
     var arr = [].slice.call(tables);
+
     arr.forEach(function(val) {
-        console.log(val.innerHTML);
-        bookings.push({tableID:(val.innerHTML).substring(2,5), time:(val.innerHTML).substring(8,16)});
-        //console.log((val.innerHTML).substring(2,5));
+        
+        bookings.push({tableID:(val.innerText).substring(0,2), time:(val.innerText).substring(2,7)});
+        //console.log((val.innerHTML).substring(14,17));
         //console.log((val.innerHTML).substring(8,26));
     });
     console.log(bookings);
