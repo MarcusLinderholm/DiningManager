@@ -9,92 +9,113 @@
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<!--Load Script and Stylesheet -->
-	<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="../stylesheets/style.css"> Logged in as: {{ user }}
+	<link rel="stylesheet" href="../stylesheets/style.css">
+
+	<h1>Logged in as: {{ user }}</h1>
+	<h3>{{ status }}</h2>
 
 </head>
-<table>
-	<tr>
-			<th style="width:500px">{{ status }}
 
-<form action="/users/booking" method="post">
-	TableID:<br>
-	<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" /><br> Name:
-	<br><input type="text" name="name" value=""><br> Time(hh):
-	<br>
-	<input type="text" name="time" value="12"><br> Duration:
-	<br>
-	<input type="text" name="duration" value="2 hours" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled"><br>
-	<input type="submit" value="Submit">
+<body>
 
-</form>
-
-
-<table>
-	<tr>
-		<th>Table</th>
-		<th>Time</th>
-		<th>Name</th>
-	</tr>
-</table>
-
-{{#booking}}
-
-
-<div class="getTableID">
 	<table>
-		<tbody>
+		<th>
+			<p>
+				Book a table!
+			</p>
+			<form action="/users/booking" method="post" align="left">
+				TableID:
+				<br />
+				<input type="text" id="tableID" name="tableID" value="1" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" readonly="true" />
+				<br />
+				<label>Name:</label>
+				<br />
+				<input type="text" name="name" value="">
+				<br />
+				<label>Time(hh):</label>
+				<br />
+				<input type="text" name="time" value="12">
+				<br />
+				<label>Duration:</label>
+				<br />
+				<input type="text" name="duration" value="2 hours" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled">
+				<br />
+				<br />
+				<button class="btn btn-book">Update</button>
+			</form>
 
-			<tr>
-				<td>{{#tableID}} {{.}} {{/tableID}}
+		</th>
+		<th>
+			<p>Delete a booked table</p>
+			<form action="/users/deleteBooking" method="post" align="right">
+				Table ID:
+				<br>
+				<input type="text" name="id" value="" />
+				<br> Time(hh):
+				<br>
+				<input type="text" name="time" value="12" />
+				<br>
+				<br />
+				<button class="btn btn-book">Delete</button>
 
-				</td>
-
-				<td>{{#time}} {{.}} {{/time}}
-				</td>
-
-				<td>{{#name}} {{.}} {{/name}}
-				</td>
-
-			</tr>
-
-		</tbody>
+			</form>
+		</th>
 	</table>
-</div>
 
+	<div class="getTableID">
+		<table class="table table-bordered table-bg table-nonfluid">
 
+			<thead>
+				<tr class="table-titles">
+					<th>Table</th>
+					<th>Time</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			{{#booking}}
+			<tbody>
+				<tr>
+					<td>{{#tableID}} {{.}} {{/tableID}}
+					</td>
+					<td>{{#time}} {{.}} {{/time}}
+					</td>
+					<td>{{#name}} {{.}} {{/name}}
+					</td>
+				</tr>
+				{{/booking}}
+			</tbody>
+		</table>
+	</div>
 
-{{/booking}}
+	<canvas id="canvas"></canvas>
 
-<p>
-	Delete booking:
-</p>
-<form action="/users/deleteBooking" method="post">
-	Table ID: <br>
-	<input type="text" name="id" value="" /><br>
-	Time(hh):
-	<br>
-	<input type="text" name="time" value="12" />
-	<br>
-	<input type="submit" name="delete" value="Delete" />
+</body>
 
-</form>
-</th>
-<th style="width:200px"><canvas id="canvas"></canvas></th>
-</tr>
-</table>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+</script>
 <script>
 	var s = "{{map}}"
 	map = stringToMap(s);
 	getTable(map);
 	var bookings = getBookings();
 	getBookedTables(bookings);
-
 	setInterval(function() {
 		getBookedTables(getBookings());
 	}, 30000);
 </script>
+
+<style>
+	.table-bg {
+		background-color: white
+	}
+
+	.table-nonfluid {
+		width: auto !important;
+	}
+</style>
+
 </html>

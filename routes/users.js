@@ -1,223 +1,223 @@
 var express = require('express');
 var router = express.Router();
-var dbFunc = require('../models/dbFunc.js')
+var dbFunc = require('../models/userList.js')
 var mapManager = require('../public/javascripts/mapManager.js')
 
 
 router.get('/', function(req, res, next) {
-    res.render('login');
+  res.render('login');
 });
 
 router.post('/signup', function(req, res, next) {
-    dbFunc.addUser(req.body.email, req.body.password, req.body.map, function(err, row, fields) {
-        if (err) {
-            res.render('login', {
-                status: "Email already registered"
-            });
-        } else {
-            dbFunc.addTable(req.body.email, req.body.tables);
-            res.render('login', {
-                status: "Registration successful, email: " + req.body.email
-            });
-        }
-    });
+  dbFunc.addUser(req.body.email, req.body.password, req.body.map, function(err, row, fields) {
+    if (err) {
+      res.render('login', {
+        status: "Email already registered"
+      });
+    } else {
+      dbFunc.addTable(req.body.email, req.body.tables);
+      res.render('login', {
+        status: "Registration successful, email: " + req.body.email
+      });
+    }
+  });
 });
 
 router.post('/login', function(req, res, next) {
-    var currentTime = new Date();
-    dbFunc.deleteBookingsByTime(req.body.email, (currentTime.getHours() - 2) + ":00:00");
-    dbFunc.userLookup(req.body.email, function(err, row, fields) {
-        if (!err) {
-            if (row.length == 0) {
-                res.render('login', {
-                    status: "User not registered"
-                });
-            } else {
-                var map = row[0].map;
-                if (row[0].password == req.body.password) {
-                    var arr = [];
-                    dbFunc.getBookings(req.body.email, function(err, row, fields) {
-                        if (!err) {
-                            for (var i = 0; i < row.length; i++) {
-                                arr[i] = {
-                                    tableID: row[i].tableID,
-                                    time: row[i].time,
-                                    name: row[i].name
-                                };
-                            }
-                            res.render('index', {
-                                user: req.session.user,
-                                map: map,
-                                booking: arr
+  var currentTime = new Date();
+  dbFunc.deleteBookingsByTime(req.body.email, (currentTime.getHours() - 2) + ":00:00");
+  dbFunc.userLookup(req.body.email, function(err, row, fields) {
+    if (!err) {
+      if (row.length == 0) {
+        res.render('login', {
+          status: "User not registered"
+        });
+      } else {
+        var map = row[0].map;
+        if (row[0].password == req.body.password) {
+          var arr = [];
+          dbFunc.getBookings(req.body.email, function(err, row, fields) {
+            if (!err) {
+              for (var i = 0; i < row.length; i++) {
+                arr[i] = {
+                  tableID: row[i].tableID,
+                  time: row[i].time,
+                  name: row[i].name
+                };
+              }
+              res.render('index', {
+                user: req.session.user,
+                map: map,
+                booking: arr
 
-                            });
-                        } else {
-                            console.log(err);
-                        }
-                    })
-                    req.session.user = req.body.email;
-                    req.session.map = row[0].map;
-                } else {
-                    res.render('login', {
-                        status: "Wrong password"
-                    });
-                }
+              });
+            } else {
+              console.log(err);
             }
-        } else throw err;
-    });
+          })
+          req.session.user = req.body.email;
+          req.session.map = row[0].map;
+        } else {
+          res.render('login', {
+            status: "Wrong password"
+          });
+        }
+      }
+    } else throw err;
+  });
 });
 
 router.post('/deleteBooking', function(req, res, next) {
-    dbFunc.deleteBooking(req.session.user, req.body.id, req.body.time, function(err, row, fields) {
+  dbFunc.deleteBooking(req.session.user, req.body.id, req.body.time, function(err, row, fields) {
+    if (!err) {
+      console.log("booking removed");
+      dbFunc.getBookings(req.session.user, function(err, row, fields) {
         if (!err) {
-            console.log("booking removed");
-            dbFunc.getBookings(req.session.user, function(err, row, fields) {
-                if (!err) {
-                    var arr = [];
-                    for (var i = 0; i < row.length; i++) {
-                        arr[i] = {
-                            tableID: row[i].tableID,
-                            time: row[i].time,
-                            name: row[i].name
-                        };
-                    }
-                    res.render('index', {
-                        status: "Booking removed",
-                        map: req.session.map,
-                        user: req.session.user,
-                        booking: arr
-                    })
-                } else {
-                    console.log(err);
-                }
-            })
+          var arr = [];
+          for (var i = 0; i < row.length; i++) {
+            arr[i] = {
+              tableID: row[i].tableID,
+              time: row[i].time,
+              name: row[i].name
+            };
+          }
+          res.render('index', {
+            status: "Booking removed",
+            map: req.session.map,
+            user: req.session.user,
+            booking: arr
+          })
         } else {
-            console.log(err);
+          console.log(err);
         }
-    })
+      })
+    } else {
+      console.log(err);
+    }
+  })
 });
 
 router.post('/booking', function(req, res, next) {
-    var timeArr = [];
-    var check;
-    //check if a table is selected
-    if (req.body.tableID != 0) {
-        //retrieve bookings for this table
-        dbFunc.getTableBookings(req.session.user, req.body.tableID, function(err, row, fields) {
-            if (!err) {
-                //Put the query results in a new array
+  var timeArr = [];
+  var check;
+  //check if a table is selected
+  if (req.body.tableID != 0) {
+    //retrieve bookings for this table
+    dbFunc.getTableBookings(req.session.user, req.body.tableID, function(err, row, fields) {
+      if (!err) {
+        //Put the query results in a new array
+        for (var i = 0; i < row.length; i++) {
+          timeArr[i] = {
+            time: row[i].time,
+            name: row[i].name
+          };
+        }
+
+
+        if (timeArr.length != 0) {
+          //Check if the given booking time is already in use at this table (returns true if time is available)
+          // check = timeArr.every(function(val) {
+          //   if (req.body.time < (parseInt(val.time.substring(0, 2)) - 1) ||
+          //     req.body.time > (parseInt(val.time.substring(0, 2)) + 1) ||
+          //     req.body.time != (parseInt(val.time.substring(0, 2)))) {
+          //
+          //   }
+          // })
+
+          console.log(check);
+
+
+          if (true) {
+            dbFunc.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
+              if (!err) {
+                var currentTime = new Date();
+                dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+                  if (!err) {
+                    dbFunc.getBookings(req.session.user, function(err, row, fields) {
+                      if (!err) {
+                        var arr = [];
+                        for (var i = 0; i < row.length; i++) {
+                          arr[i] = {
+                            tableID: row[i].tableID,
+                            time: row[i].time,
+                            name: row[i].name
+                          };
+                        }
+                        res.render('index', {
+                          status: "Table " + req.body.tableID + " booked",
+                          map: req.session.map,
+                          user: req.session.user,
+                          booking: arr
+                        })
+                      } else {
+                        console.log(err);
+                      }
+                    })
+                  }
+                })
+              } else {
+                console.log(err);
+              }
+            })
+          } else {
+            dbFunc.getBookings(req.session.user, function(err, row, fields) {
+              if (!err) {
+                var arr = [];
                 for (var i = 0; i < row.length; i++) {
-                    timeArr[i] = {
-                        time: row[i].time,
-                        name: row[i].name
-                    };
+                  arr[i] = {
+                    tableID: row[i].tableID,
+                    time: row[i].time,
+                    name: row[i].name
+                  };
                 }
+                res.render('index', {
+                  status: "Table " + req.body.tableID + " is booked during this time. Please choose another time.",
+                  map: req.session.map,
+                  user: req.session.user,
+                  booking: arr
+                })
+              } else {
+                console.log(err);
+              }
+            })
+          }
 
-
-                if (timeArr.length != 0) {
-                    //Check if the given booking time is already in use at this table (returns true if time is available)
-                    check = timeArr.every(function(val) {
-                        if (req.body.time < (parseInt(val.time.substring(0, 2)) - 1) ||
-                            req.body.time > (parseInt(val.time.substring(0, 2)) + 1) ||
-                            req.body.time != (parseInt(val.time.substring(0, 2)))) {
-
-                        }
-                    })
-
-                    console.log(check);
-
-
-                    if (check) {
-                        dbFunc.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
-                            if (!err) {
-                                var currentTime = new Date();
-                                dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
-                                    if (!err) {
-                                        dbFunc.getBookings(req.session.user, function(err, row, fields) {
-                                            if (!err) {
-                                                var arr = [];
-                                                for (var i = 0; i < row.length; i++) {
-                                                    arr[i] = {
-                                                        tableID: row[i].tableID,
-                                                        time: row[i].time,
-                                                        name: row[i].name
-                                                    };
-                                                }
-                                                res.render('index', {
-                                                    status: "Table " + req.body.tableID + " booked",
-                                                    map: req.session.map,
-                                                    user: req.session.user,
-                                                    booking: arr
-                                                })
-                                            } else {
-                                                console.log(err);
-                                            }
-                                        })
-                                    }
-                                })
-                            } else {
-                                console.log(err);
-                            }
-                        })
+        } else {
+          dbFunc.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
+            if (!err) {
+              var currentTime = new Date();
+              dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+                if (!err) {
+                  dbFunc.getBookings(req.session.user, function(err, row, fields) {
+                    if (!err) {
+                      var arr = [];
+                      for (var i = 0; i < row.length; i++) {
+                        arr[i] = {
+                          tableID: row[i].tableID,
+                          time: row[i].time,
+                          name: row[i].name
+                        };
+                      }
+                      res.render('index', {
+                        status: "Table " + req.body.tableID + " booked",
+                        map: req.session.map,
+                        user: req.session.user,
+                        booking: arr
+                      })
                     } else {
-                        dbFunc.getBookings(req.session.user, function(err, row, fields) {
-                            if (!err) {
-                                var arr = [];
-                                for (var i = 0; i < row.length; i++) {
-                                    arr[i] = {
-                                        tableID: row[i].tableID,
-                                        time: row[i].time,
-                                        name: row[i].name
-                                    };
-                                }
-                                res.render('index', {
-                                    status: "Table " + req.body.tableID + " is booked during this time. Please choose another time.",
-                                    map: req.session.map,
-                                    user: req.session.user,
-                                    booking: arr
-                                })
-                            } else {
-                                console.log(err);
-                            }
-                        })
+                      console.log(err);
                     }
-
-                } else {
-                    dbFunc.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function(err, row, fields) {
-                        if (!err) {
-                            var currentTime = new Date();
-                            dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
-                                if (!err) {
-                                    dbFunc.getBookings(req.session.user, function(err, row, fields) {
-                                        if (!err) {
-                                            var arr = [];
-                                            for (var i = 0; i < row.length; i++) {
-                                                arr[i] = {
-                                                    tableID: row[i].tableID,
-                                                    time: row[i].time,
-                                                    name: row[i].name
-                                                };
-                                            }
-                                            res.render('index', {
-                                                status: "Table " + req.body.tableID + " booked",
-                                                map: req.session.map,
-                                                user: req.session.user,
-                                                booking: arr
-                                            })
-                                        } else {
-                                            console.log(err);
-                                        }
-                                    })
-                                }
-                            })
-                        } else {
-                            console.log(err);
-                        }
-                    })
+                  })
                 }
-
+              })
+            } else {
+              console.log(err);
             }
-        })
+          })
+        }
+
+      }
+    })
 
 
 
@@ -227,46 +227,46 @@ router.post('/booking', function(req, res, next) {
 
 
 
-    } else {
-        res.render('index', {
-            status: "Please select a table",
-            map: req.session.map,
-            user: req.session.user,
-            booking: timeArr
-        })
-    }
+  } else {
+    res.render('index', {
+      status: "Please select a table",
+      map: req.session.map,
+      user: req.session.user,
+      booking: timeArr
+    })
+  }
 
 
 
 });
 
 router.post('/getBookings', function(req, res, next) {
-    var currentTime = new Date();
-    dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
-        console.log(currentTime.getHours());
-        if (!err) {
-            console.log("Removed booking");
-        }
-    })
-    dbFunc.getBookings(req.session.user, function(err, row, fields) {
-        if (!err) {
-            var arr = [];
-            for (var i = 0; i < row.length; i++) {
-                arr[i] = {
-                    tableID: row[i].tableID,
-                    time: row[i].time,
-                    name: row[i].name
-                };
-            }
-            res.render('index', {
-                map: req.session.map,
-                user: req.session.user,
-                booking: arr
-            })
-        } else {
-            console.log(err);
-        }
-    })
+  var currentTime = new Date();
+  dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ":00:00", function(err, row, fields) {
+    console.log(currentTime.getHours());
+    if (!err) {
+      console.log("Removed booking");
+    }
+  })
+  dbFunc.getBookings(req.session.user, function(err, row, fields) {
+    if (!err) {
+      var arr = [];
+      for (var i = 0; i < row.length; i++) {
+        arr[i] = {
+          tableID: row[i].tableID,
+          time: row[i].time,
+          name: row[i].name
+        };
+      }
+      res.render('index', {
+        map: req.session.map,
+        user: req.session.user,
+        booking: arr
+      })
+    } else {
+      console.log(err);
+    }
+  })
 });
 
 module.exports = router;
