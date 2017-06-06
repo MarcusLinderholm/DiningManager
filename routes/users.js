@@ -7,6 +7,7 @@ router.get('/', function (req, res, next) {
   res.render('login')
 })
 
+// Register user
 router.post('/signup', function (req, res, next) {
   dbFunc.addUser(req.body.email, req.body.password, req.body.map, function (err, row, fields) {
     if (err) {
@@ -24,6 +25,7 @@ router.post('/signup', function (req, res, next) {
   })
 })
 
+// Login existing user
 router.post('/login', function (req, res, next) {
   var currentTime = new Date()
   dbFunc.deleteBookingsByTime(req.body.email, (currentTime.getHours() - 2) + ':00:00')
@@ -68,6 +70,7 @@ router.post('/login', function (req, res, next) {
   })
 })
 
+// Delete a booking
 router.post('/deleteBooking', function (req, res, next) {
   dbFunc.deleteBooking(req.session.user, req.body.id, req.body.time, function (err, row, fields) {
     if (!err) {
@@ -98,12 +101,13 @@ router.post('/deleteBooking', function (req, res, next) {
   })
 })
 
+// Book a table
 router.post('/booking', function (req, res, next) {
   var timeArr = []
   var check
-  // check if a table is selected
+  // Check if a table is selected
   if (req.body.tableID != 0) {
-    // retrieve bookings for this table
+    // Retrieve bookings for this table
     dbFunc.getTableBookings(req.session.user, req.body.tableID, function (err, row, fields) {
       if (!err) {
         // Put the query results in a new array
@@ -115,17 +119,6 @@ router.post('/booking', function (req, res, next) {
         }
 
         if (timeArr.length != 0) {
-          // Check if the given booking time is already in use at this table (returns true if time is available)
-          // check = timeArr.every(function(val) {
-          //   if (req.body.time < (parseInt(val.time.substring(0, 2)) - 1) ||
-          //     req.body.time > (parseInt(val.time.substring(0, 2)) + 1) ||
-          //     req.body.time != (parseInt(val.time.substring(0, 2)))) {
-          //
-          //   }
-          // })
-
-          console.log(check)
-
           if (true) {
             dbFunc.bookTable(req.session.user, req.body.tableID, req.body.time, req.body.name, function (err, row, fields) {
               if (!err) {
@@ -216,15 +209,30 @@ router.post('/booking', function (req, res, next) {
       }
     })
   } else {
-    res.render('index', {
-      status: 'Please select a table',
-      map: req.session.map,
-      user: req.session.user,
-      booking: timeArr
+    dbFunc.getBookings(req.session.user, function (err, row, fields) {
+      if (!err) {
+        var arr = []
+        for (var i = 0; i < row.length; i++) {
+          arr[i] = {
+            tableID: row[i].tableID,
+            time: row[i].time,
+            name: row[i].name
+          }
+        }
+        res.render('index', {
+          status: 'Please select a table',
+          map: req.session.map,
+          user: req.session.user,
+          booking: arr
+        })
+      } else {
+        console.log(err)
+      }
     })
   }
 })
 
+// Retrieve bookings
 router.post('/getBookings', function (req, res, next) {
   var currentTime = new Date()
   dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ':00:00', function (err, row, fields) {
