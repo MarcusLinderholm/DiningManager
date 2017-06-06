@@ -7,7 +7,7 @@
 	<script src="../javascripts/mapCreator.js"></script>
 	<script src="../javascripts/bookingManager.js"></script>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<!--Load Script and Stylesheet -->
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -60,7 +60,7 @@
 					<input type="text" name="duration" value="2 hours" style="color:#888;" onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled="disabled">
 					<br />
 					<br />
-					<button class="btn btn-book">Book</button>
+					<button class="btn btn-book" onclick="updateDraw()">Book</button>
 				</form>
 			</td>
 			<td>
@@ -89,9 +89,11 @@
 						{{#booking}}
 						<tbody>
 							<tr>
-								<td>{{#tableID}} {{.}} {{/tableID}}
+								<!-- <div class="getTableIDs"> -->
+									<td class="getTableIDs">{{#tableID}} {{.}} {{/tableID}}
+								<!-- </div> -->
 								</td>
-								<td>{{#time}} {{.}} {{/time}}
+								<td class="getTimes">{{#time}} {{.}} {{/time}}
 								</td>
 								<td>{{#name}} {{.}} {{/name}}
 								</td>
@@ -111,13 +113,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
 	var s = "{{map}}"
-	map = stringToMap(s);
-	getTable(map);
-	var bookings = getBookings();
-	getBookedTables(bookings);
+	map = stringToMap(s)
+	draw(map)
+	getTable(map)
+	var bookings = getBookings()
+	var bookedTables = getBookedTables(bookings)
+	updateDraw(map, bookedTables)
+
 	setInterval(function() {
-		getBookedTables(getBookings());
-	}, 30000);
+		var bookings = getBookings()
+		var bookedTables = getBookedTables(bookings)
+		updateDraw(map, bookedTables)
+	}, 5000);
 </script>
 
 <style>
