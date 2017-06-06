@@ -14,6 +14,8 @@ router.post('/signup', function (req, res, next) {
         status: 'Email already registered'
       })
     } else {
+      console.log(req.body.map)
+      console.log(req.body.tables)
       dbFunc.addTable(req.body.email, req.body.tables)
       res.render('login', {
         status: 'Registration successful, email: ' + req.body.email
