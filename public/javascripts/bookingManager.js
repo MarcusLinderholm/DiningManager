@@ -2,7 +2,7 @@
  *Sets the tableID field to the id of the table you
  *click on the canvas
  */
-function getTable (map) {
+function getTable(map) {
   var scale = 5
   var canvas = document.getElementById('canvas')
   canvas.width = 75 * scale
@@ -23,17 +23,33 @@ function getTable (map) {
  *Returns a list of all bookings in objects with the format
  * {tableID,time}
  */
-function getBookings () {
+function getBookings() {
+  var arr1 = []
+  var arr2 = []
   var bookings = []
-  var tables = document.getElementsByClassName('getTableID')
-  var arr = [].slice.call(tables)
+  var tableIDs = [].slice.call(document.getElementsByClassName('getTableIDs'))
+  var times = [].slice.call(document.getElementsByClassName('getTimes'))
 
-  arr.forEach(function (val) {
-    bookings.push({
-      tableID: (val.innerText).substring(0, 2).replace(/\s+/g, ''),
-      time: (val.innerText).substring(2, 5).replace(/\s+/g, '')
+  tableIDs.forEach(function (id) {
+    arr1.push({
+      tableID: id.innerText
     })
   })
+
+  times.forEach(function (val) {
+    // console.log(val.innerText)
+    arr2.push({
+      time: (val.innerText)
+    })
+  })
+
+  for (var i = 0; i < arr1.length; i += 1) {
+    bookings.push({
+      tableID: arr1[i].tableID,
+      time: arr2[i].time
+    })
+  }
+
   return bookings
 }
 /*
@@ -41,14 +57,14 @@ function getBookings () {
  *Redraws the map and returns the list of currently
  *booked tables
  */
-function getBookedTables (bookings) {
+function getBookedTables(bookings) {
   var currentTime = new Date()
   var bookedTables = []
   bookings.forEach(function (booking) {
-    if (parseInt(booking.time.substring(0, 3)) <= currentTime.getHours() && parseInt(booking.time.substring(0, 3)) + 1 >= currentTime.getHours()) {
+    // console.log(booking.time.substring(0,2))
+    if (parseInt(booking.time.substring(0, 2)) <= currentTime.getHours() && parseInt(booking.time.substring(0, 2)) + 1 >= currentTime.getHours()) {
       bookedTables.push(parseInt(booking.tableID))
     }
   })
-  updateDraw(map, bookedTables)
   return bookedTables
 }
