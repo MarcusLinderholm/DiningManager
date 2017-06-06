@@ -6,35 +6,26 @@
       <title>Sign-Up/Login Form</title>
       <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
       <link rel="stylesheet" href="../stylesheets/loginstyle.css">
       <script src="../javascripts/draw.js"></script>
       <script src="../javascripts/mapManager.js"></script>
       <script src="../javascripts/mapCreator.js"></script>
-
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <!--Load Script and Stylesheet -->
 
 </head>
 
 <body>
-
       <div class="form">
-            <p>
-                  {{ status }}
-            </p>
+            <p> {{ status }} </p>
             <ul class="tab-group">
                   <li class="tab active"><a href="#login">Log In</a></li>
                   <li class="tab"><a href="#signup">Sign Up</a></li>
             </ul>
-
             <div class="tab-content">
-
                   <div id="login">
                         <h1>Welcome Back!</h1>
-
                         <form action="/users/login" method="post">
-
                               <div class="field-wrap">
                                     <label>
                                           Email Address
@@ -42,7 +33,6 @@
                                     </label>
                                     <input type="email" name="email" required autocomplete="off" />
                               </div>
-
                               <div class="field-wrap">
                                     <label>
                                           Password
@@ -50,11 +40,8 @@
                                     </label>
                                     <input type="password" name="password" required autocomplete="off" />
                               </div>
-
                               <button class="button button-block" />Log In</button>
-
                         </form>
-
                   </div>
 
                   <div id="signup">
