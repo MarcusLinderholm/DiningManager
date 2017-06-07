@@ -71,6 +71,6 @@ function getBookedTables (bookings) {
 }
 
 function deleteTableBooking (email, id, time) {
-  console.log('hej')
-  dbFunc.deleteBooking(email, id, time)
+  // dbFunc.deleteBooking(email, id, time)
+  console.log(email + id + time)
 }
