@@ -72,7 +72,7 @@ router.post('/login', function (req, res, next) {
 
 // Delete a booking
 router.post('/deleteBooking', function (req, res, next) {
-  dbFunc.deleteBooking(req.session.user, req.body.id, req.body.time, function (err, row, fields) {
+  dbFunc.deleteBooking(req.body.email, req.body.id, req.body.time.substring(0, 2), function (err, row, fields) {
     if (!err) {
       console.log('booking removed')
       dbFunc.getBookings(req.session.user, function (err, row, fields) {
@@ -261,5 +261,6 @@ router.post('/getBookings', function (req, res, next) {
     }
   })
 })
+
 
 module.exports = router

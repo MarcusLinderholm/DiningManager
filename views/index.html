@@ -30,9 +30,6 @@
 					Book a table
 				</th>
 				<th class="col-md-2">
-					Remove booked table
-				</th>
-				<th class="col-md-2">
 					Booked tables
 				</th>
 				<th class="col-md-2">
@@ -65,19 +62,6 @@
 				</form>
 			</td>
 			<td>
-				<form action="/users/deleteBooking" method="post">
-					Table ID:
-					<br>
-					<input type="text" name="id" value="" />
-					<br> Time(hh):
-					<br>
-					<input type="text" name="time" value="12" />
-					<br>
-					<br />
-					<button class="btn btn-book">Delete</button>
-				</form>
-			</td>
-			<td>
 				<div class="getTableID">
 					<table class="table table-bordered table-bg table-nonfluid">
 						<thead>
@@ -99,7 +83,13 @@
 								<td>{{#name}} {{.}} {{/name}}
 								</td>
 								<td>
-									<button class="btn btn-book" onclick="deleteBooking( {{ user }}, {{ tableID }}, {{ time }} )">Delete</button>
+									<form action="/users/deleteBooking" method="post">
+										<input type="hidden" name="email" value="{{user}}"  />
+										<input type="hidden" name="id" value="{{tableID}}" />
+										<input type="hidden" name="time" value="{{time}}" />
+										<button class="btn btn-book">Delete</button>
+										<!-- <button class="btn btn-book" onclick="deleteTableBooking('{{user}}', '{{tableID}}', '{{time}}')">Delete</button> -->
+									</form>
 								</td>
 							</tr>
 							{{/booking}}
@@ -116,7 +106,6 @@
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
-
 	redrawMap("{{map}}");
 </script>
 
