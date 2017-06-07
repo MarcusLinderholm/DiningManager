@@ -71,3 +71,19 @@ function stringToMap (mapString) {
   })
   return map
 }
+function redrawMap(map){
+  var s = map
+  map = stringToMap(s)
+  draw(map)
+  getTable(map)
+  var bookings = getBookings()
+  var bookedTables = getBookedTables(bookings)
+  updateDraw(map, bookedTables)
+
+  setInterval(function() {
+    console.log("hehe");
+    var bookings = getBookings()
+    var bookedTables = getBookedTables(bookings)
+    updateDraw(map, bookedTables)
+  }, 5000);
+}
