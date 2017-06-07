@@ -71,7 +71,7 @@ function stringToMap (mapString) {
   })
   return map
 }
-function redrawMap(map){
+function redrawMap (map) {
   var s = map
   map = stringToMap(s)
   draw(map)
@@ -80,10 +80,10 @@ function redrawMap(map){
   var bookedTables = getBookedTables(bookings)
   updateDraw(map, bookedTables)
 
-  setInterval(function() {
-    console.log("hehe");
+  setInterval(function () {
+    console.log('hehe')
     var bookings = getBookings()
     var bookedTables = getBookedTables(bookings)
     updateDraw(map, bookedTables)
-  }, 5000);
+  }, 5000)
 }

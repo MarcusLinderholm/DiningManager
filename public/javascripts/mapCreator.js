@@ -28,15 +28,7 @@ function tableCreator () {
   }, false)
 }
 
-function restaurantCreator() {
-    /*
-    Map where Email is currentEmail <- mapToString(currentMap)
-    createTable id, email <- tableArray.forEach
-    */
-    tableArray.forEach(function(table) {
-        //console.log(table);
-    });
-    //mapToString(currentMap);
-    document.getElementById('map').value = mapToString(currentMap);
-    document.getElementById('tables').value = tableArray.length;
+function restaurantCreator () {
+  document.getElementById('map').value = mapToString(currentMap)
+  document.getElementById('tables').value = tableArray.length
 }

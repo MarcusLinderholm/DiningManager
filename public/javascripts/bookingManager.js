@@ -2,7 +2,7 @@
  *Sets the tableID field to the id of the table you
  *click on the canvas
  */
-function getTable(map) {
+function getTable (map) {
   var scale = 5
   var canvas = document.getElementById('canvas')
   canvas.width = 75 * scale
@@ -23,7 +23,7 @@ function getTable(map) {
  *Returns a list of all bookings in objects with the format
  * {tableID,time}
  */
-function getBookings() {
+function getBookings () {
   var arr1 = []
   var arr2 = []
   var bookings = []
@@ -57,7 +57,7 @@ function getBookings() {
  *Redraws the map and returns the list of currently
  *booked tables
  */
-function getBookedTables(bookings) {
+function getBookedTables (bookings) {
   var currentTime = new Date()
   var bookedTables = []
   bookings.forEach(function (booking) {
