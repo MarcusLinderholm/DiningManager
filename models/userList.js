@@ -6,7 +6,7 @@
 */
 'use strict'
 
-var db = require('../db/userdb.js');
+var db = require('../db/userdb.js')
 
 function UserList(db) {
     this.db = db;

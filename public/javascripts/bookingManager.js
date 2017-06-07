@@ -1,3 +1,4 @@
+
 /*
  *Sets the tableID field to the id of the table you
  *click on the canvas
@@ -67,4 +68,9 @@ function getBookedTables (bookings) {
     }
   })
   return bookedTables
+}
+
+function deleteTableBooking (email, id, time) {
+  console.log('hej')
+  dbFunc.deleteBooking(email, id, time)
 }

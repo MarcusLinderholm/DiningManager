@@ -6,6 +6,7 @@
 	<script src="../javascripts/mapManager.js"></script>
 	<script src="../javascripts/mapCreator.js"></script>
 	<script src="../javascripts/bookingManager.js"></script>
+	<!-- <script src="../javascripts/userList.js"></script> -->
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<!--Load Script and Stylesheet -->
@@ -89,13 +90,16 @@
 						{{#booking}}
 						<tbody>
 							<tr>
-								<!-- <div class="getTableIDs"> -->
-									<td class="getTableIDs">{{#tableID}} {{.}} {{/tableID}}
-								<!-- </div> -->
+
+								<td class="getTableIDs">{{#tableID}} {{.}} {{/tableID}}
+
 								</td>
 								<td class="getTimes">{{#time}} {{.}} {{/time}}
 								</td>
 								<td>{{#name}} {{.}} {{/name}}
+								</td>
+								<td>
+									<button class="btn btn-book" onclick="deleteBooking( {{ user }}, {{ tableID }}, {{ time }} )">Delete</button>
 								</td>
 							</tr>
 							{{/booking}}
@@ -112,6 +116,7 @@
 </body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
+
 	redrawMap("{{map}}");
 </script>
 
