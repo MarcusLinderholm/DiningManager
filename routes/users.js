@@ -74,7 +74,6 @@ router.post('/login', function (req, res, next) {
 router.post('/deleteBooking', function (req, res, next) {
   dbFunc.deleteBooking(req.body.email, req.body.id, req.body.time.substring(0, 2), function (err, row, fields) {
     if (!err) {
-      console.log('booking removed')
       dbFunc.getBookings(req.session.user, function (err, row, fields) {
         if (!err) {
           var arr = []
@@ -236,7 +235,6 @@ router.post('/booking', function (req, res, next) {
 router.post('/getBookings', function (req, res, next) {
   var currentTime = new Date()
   dbFunc.deleteBookingsByTime(req.session.user, (currentTime.getHours() - 2) + ':00:00', function (err, row, fields) {
-    console.log(currentTime.getHours())
     if (!err) {
       console.log('Removed booking')
     }
